@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="cs"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/public/css/style.css">
+
+    <link rel="icon" type="image/png" href="favicon.ico">
+    <title id="spolecne_prvni">Nepřihlášený</title>
+</head>
+<body>
+<!-- nadpis stranky -->
+<header class="container-fluid">
+    <div class="row">
+        <div class="col-1">
+            <button id="spolecne_bt_info" type="button" class="btn btn-info btn-lg font-weight-bold mt-4" data-toggle="popover" title="" data-content="Toto je vzorová Ukázková Prohlížecí Aplikace (UPA) pro použití v&nbsp;předmětech KIV/WEB a KIV/OKS.
+                            Všechny další podrobnosti se dočtete v Návodu." data-placement="bottom" data-original-title="Informace o aplikaci">
+                <abbr id="spolecne_bt_abbr" title="Klikni pro info o aplikaci">
+                    <i class="fas fa-info fa-spin"></i>
+                </abbr>
+            </button>
+        </div>
+        <div class="col-11">
+            <h1 id="spolecne_nadpis" class="text-center">
+                Přehledy odevzdávání samostatných prací<br>
+                <a id="spolecne_nadpis_predmet" href="navod" class="text-info font-weight-bold">
+                    KIV/OKS</a>
+                <a id="spolecne_nadpis_odkaz" title="Stránky předmětu KIV/OKS na Courseware ZČU" href="https://portal.zcu.cz/portal/studium/courseware/kiv/oks" target="_blank" class="text-info">
+                    <i class="fas fa-external-link-alt odkaz"></i></a>
+            </h1>
+        </div>
+    </div>
+</header>
+<!-- Menu -->
+<nav class="navbar navbar-expand-md bg-secondary navbar-dark sticky-top">
+    <div class="container">
+          <span id="menu_role" class="navbar-brand dropdown">
+        <span id="nep_menu" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="role fas fa-user-secret"></i> Nepřihlášený</span>
+        <div class="dropdown-menu">
+            <a id="nep_menu_login" class="dropdown-item" href="#" data-toggle="modal" data-target="#nep_modal_login">Login
+              <i class="fas fa-sign-in-alt"></i>
+            </a>
+            <a id="nep_menu_registrace" class="dropdown-item" href="#" data-toggle="modal" data-target="#nep_modal_registrace">Registrace</a>
+        </div>
+        </span>
+        <!-- Toggler/collapsibe Button -->
+        <button id="menu_collapsible_button" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu_collapsible_navbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Navbar links -->
+        <div id="menu_collapsible_navbar" class="collapse navbar-collapse">
+            <ul class="navbar-nav">
+                <li id="menu_navod" class="nav-item">
+                    <a class="nav-link {% if tab == "navod" %}active{% endif %}" href="navod">
+                        <i class="menu-small fas fa-book-open"></i> Návod
+                    </a>
+                </li>
+
+                <li id="menu_celkove" class="nav-item">
+                    <a class="nav-link {% if tab == "celkove" %}active{% endif %}" href="celkove">
+                        Celkově <span id="menu_celkove_vsech_studentu" title="Počet všech zapsaných studentů" class="badge badge-primary badge-pill">{{ students_count }}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br>
+<!-- KONEC: Menu -->
+<div id="nep_modal_registrace" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 id="nep_modal_registrace_nadpis" class="modal-title">Registrujte se podle své role</h4>
+                <button id="modal_obecny_bt_zavreni" type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="container">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#nep_modal_registrace_uci">
+                                <i class="role fas fa-user-tie"></i><span class="font-weight-bold"> Učitel</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#nep_modal_registrace_stu">
+                                <i class="role fas fa-user-graduate"></i><span class="font-weight-bold"> Student</span></a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div id="nep_modal_registrace_uci" class="container tab-pane fade"><br>
+                            <form action="index.php" method="post">
+                                <div class="form-group">
+                                    <input id="nep_modal_registrace_uci_heslo" type="password" class="form-control" placeholder="Úplně první zadání hesla" name="regHesloUci" title="Učitel při registraci zadá jakékoliv své budoucí heslo." required="">
+                                    <div class="invalid-feedback">Prosím, zadejte svoje nové heslo.</div>
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <input id="nep_modal_registrace_uci_submit" type="submit" class="btn btn-primary" name="OBSLUHA_navod_registraceUcitel" value="Zaregistrovat">
+                                    <button id="nep_modal_registrace_uci_zrusit" type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="nep_modal_registrace_stu" class="container tab-pane active"><br>
+                            <form action="index.php" method="post">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><abbr title="Nevidíte-li zde svoje osobní číslo, tak se pravděpodobně již pod ním přihlásil někdo jiný.">Osobní číslo</abbr></span>
+                                    </div>
+                                    <select id="nep_modal_registrace_stu_oscislo" class="form-control" name="regOsCisloUci">
+                                        <option id="oscislo_nevybrano">--- Nevybráno ---</option>
+                                        <option id="regis_A18B0334P">A18B0334P</option>
+                                        <option id="regis_A19B0008P">A19B0008P</option>
+                                        <option id="regis_A19B0015P">A19B0015P</option>
+                                        <option id="regis_A19B0021P">A19B0021P</option>
+                                        <option id="regis_A19B0022P">A19B0022P</option>
+                                        <option id="regis_A19B0027P">A19B0027P</option>
+                                        <option id="regis_A19B0032P">A19B0032P</option>
+                                        <option id="regis_A19B0034P">A19B0034P</option>
+                                        <option id="regis_A19B0042P">A19B0042P</option>
+                                        <option id="regis_A19B0049P">A19B0049P</option>
+                                        <option id="regis_A19B0051P">A19B0051P</option>
+                                        <option id="regis_A19B0052P">A19B0052P</option>
+                                        <option id="regis_A19B0056P">A19B0056P</option>
+                                        <option id="regis_A19B0061P">A19B0061P</option>
+                                        <option id="regis_A19B0064P">A19B0064P</option>
+                                        <option id="regis_A19B0066P">A19B0066P</option>
+                                        <option id="regis_A19B0069P">A19B0069P</option>
+                                        <option id="regis_A19B0078P">A19B0078P</option>
+                                        <option id="regis_A19B0083P">A19B0083P</option>
+                                        <option id="regis_A19B0088P">A19B0088P</option>
+                                        <option id="regis_A19B0091P">A19B0091P</option>
+                                        <option id="regis_A19B0096P">A19B0096P</option>
+                                        <option id="regis_A19B0097P">A19B0097P</option>
+                                        <option id="regis_A19B0099P">A19B0099P</option>
+                                        <option id="regis_A19B0103P">A19B0103P</option>
+                                        <option id="regis_A19B0110P">A19B0110P</option>
+                                        <option id="regis_A19B0113P">A19B0113P</option>
+                                        <option id="regis_A19B0114P">A19B0114P</option>
+                                        <option id="regis_A19B0118P">A19B0118P</option>
+                                        <option id="regis_A19B0121P">A19B0121P</option>
+                                        <option id="regis_A19B0122P">A19B0122P</option>
+                                        <option id="regis_A19B0135P">A19B0135P</option>
+                                        <option id="regis_A19B0141P">A19B0141P</option>
+                                        <option id="regis_A19B0142P">A19B0142P</option>
+                                        <option id="regis_A19B0144P">A19B0144P</option>
+                                        <option id="regis_A19B0153P">A19B0153P</option>
+                                        <option id="regis_A19B0155P">A19B0155P</option>
+                                        <option id="regis_A19B0157P">A19B0157P</option>
+                                        <option id="regis_A19B0161P">A19B0161P</option>
+                                        <option id="regis_A19B0165P">A19B0165P</option>
+                                        <option id="regis_A19B0176P">A19B0176P</option>
+                                        <option id="regis_A19B0178P">A19B0178P</option>
+                                        <option id="regis_A19B0183P">A19B0183P</option>
+                                        <option id="regis_A19B0187P">A19B0187P</option>
+                                        <option id="regis_A19B0194P">A19B0194P</option>
+                                        <option id="regis_A19B0203P">A19B0203P</option>
+                                        <option id="regis_A19B0206P">A19B0206P</option>
+                                        <option id="regis_A19B0207P">A19B0207P</option>
+                                        <option id="regis_A19B0211P">A19B0211P</option>
+                                        <option id="regis_A19B0218P">A19B0218P</option>
+                                        <option id="regis_A19B0226P">A19B0226P</option>
+                                        <option id="regis_A19B0229P">A19B0229P</option>
+                                        <option id="regis_A20B0104P">A20B0104P</option>
+                                        <option id="regis_A20B0147P">A20B0147P</option>
+                                        <option id="regis_A20B0148P">A20B0148P</option>
+                                        <option id="regis_A20B0199P">A20B0199P</option>
+                                        <option id="regis_A20B0257P">A20B0257P</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <input id="nep_modal_registrace_stu_heslo" type="password" class="form-control" placeholder="Úplně první zadání hesla" name="regHesloStu" title="Student při registraci zadá jakékoliv své budoucí heslo." required="">
+                                    <div class="invalid-feedback">Prosím, zadejte svoje nové heslo.</div>
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <input id="nep_modal_registrace_stu_submit" type="submit" class="btn btn-primary" name="OBSLUHA_navod_registraceStudent" value="Zaregistrovat">
+                                    <button id="nep_modal_registrace_stu_zrusit" type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="nep_modal_login" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 id="nep_modal_login_nadpis" class="modal-title">Přihlaste se podle své role</h4>
+                <button id="modal_obecny_bt_zavreni" type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="container">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#nep_modal_login_uci">
+                                <i class="role fas fa-user-tie"></i><span class="font-weight-bold"> Učitel</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#nep_modal_login_stu">
+                                <i class="role fas fa-user-graduate"></i><span class="font-weight-bold"> Student</span></a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div id="nep_modal_login_uci" class="container tab-pane fade"><br>
+                            <form action="index.php" class="" method="post" validate="">
+                                <div class="form-group">
+                                    <input id="nep_modal_login_uci_heslo" type="password" class="form-control" placeholder="Heslo" name="loginHesloUci" required="">
+                                    <div class="invalid-feedback">Prosím, zadejte svoje heslo.</div>
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <input id="nep_modal_login_uci_submit" type="submit" class="btn btn-primary" name="OBSLUHA_navod_loginUcitel" value="Přihlásit">
+                                    <button id="nep_modal_login_uci_zrusit" type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="nep_modal_login_stu" class="container tab-pane active"><br>
+                            <form action="index.php" class="" method="post" validate="">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Osobní číslo</span>
+                                    </div>
+                                    <select id="nep_modal_login_stu_oscislo" class="form-control" name="loginOsCisloUci">
+                                        <option id="oscislo_nevybrano">--- Nevybráno ---</option><option id="login_A18B0214P">A18B0214P</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input id="nep_modal_login_stu_heslo" type="password" class="form-control" placeholder="Heslo" name="loginHesloStu" required="">
+                                    <div class="invalid-feedback">Prosím, zadejte svoje heslo.</div>
+                                </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <input id="nep_modal_login_stu_submit" type="submit" class="btn btn-primary" name="OBSLUHA_navod_loginStudent" value="Přihlásit">
+                                    <button id="nep_modal_login_stu_zrusit" type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Obsah stranky -->
+<div class="container">
+    <!-- Clanek -->
+    <div id="content">{% block content %}{% endblock %}</div>
+</div>
+<!-- KONEC: Obsah stranky -->
+<!-- Paticka -->
+<footer class="container-fluid bg-info text-white text-center font-weight-bold small">
+    <span id="spolecne_pati_verze">Verze: 1.0.1</span>; <span id="spolecne_pati_predmet">KIV/OKS</span>;
+    <span id="spolecne_pati_autor">Jan Čarnogurský</span>; <span id="spolecne_pati_rok">© 2021</span>
+</footer>
+<!-- KONEC: Paticka -->
+<!-- ------------- JavaScripty ------------- -->
+
+
+<script src="/public/js/jQuery.js" crossorigin="anonymous"></script>
+<script src="/public/js/poper.min.js" crossorigin="anonymous"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+
+
+
+<script>
+    $(document).ready(function(){
+        $('.dropdown-toggle').dropdown()
+    });
+
+    <!-- pokud je inkludovan, tak nefunguje   -->
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
+    });
+</script>
+
+<!-- KONEC: JavaScripty ------------- -->
+
+
+</body></html>

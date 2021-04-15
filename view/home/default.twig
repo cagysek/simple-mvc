@@ -1,0 +1,135 @@
+{% extends "layout.twig" %}
+
+
+{% block content %}
+
+<article class="container">
+    <div class="row">
+        <div class="col-12 text-primary text-center">
+            <h2 id="navod_nadpis">Základní informace a návod k použití</h2>
+        </div>
+        <div id="navod_oaplikaci" class="col-sm-6">
+            <h2 id="navod_oaplikaci_nadpis">O aplikaci</h2>
+
+            <p>Jedná se o <span class="font-italic">cvičnou jednoúčelovou aplikaci</span>, která má sloužit jako demonstrační ukázka
+                současně pro předměty KIV/WEB a KIV/OKS.</p>
+            <p>Aplikace je napsána tak, aby byla smysluplně použita většina technologií požadovaných v KIV/WEB.</p>
+            <p>Aplikace je připravena jako testovatelná, což zejména znamená:
+            </p><ul>
+            <li>každý pro ovládání významný element má svoje unikátní ID,</li>
+            <li>každá akce má svojí ihned viditelnou – a tudíž ověřitelnou – odezvu.</li>
+        </ul>
+            <p></p>
+            <p>Aplikace používá reálná data z validátoru studentských úloh.
+            </p><ul>
+            <li> pro demonstrační spuštění v lokální instalaci jsou v nich osobní údaje anonymizované,</li>
+            <li> v reálné webové instalaci jsou osobní údaje skutečné.</li>
+        </ul>
+            <p></p>
+            <p>Je použit velmi jednoduchý – leč postačující – databázový model.</p>
+        </div>
+        <div id="navod_role" class="col-sm-6">
+            <h2 id="navod_role_nadpis">Role a práva uživatelů</h2>
+            <p>Aplikaci mohou využívat tři typy uživatelů.</p>
+            <ul style="list-style-type:none">
+                <li style="margin-bottom:1em;">
+                    <i class="role fas fa-user-secret"></i>          <span class="font-weight-bold">Nepřihlášený uživatel</span>
+                    <ul>
+                        <li>může si ihned prohlížet Celkové přehledy</li>
+                        <li>může se zaregistrovat v roli studenta či učitele</li>
+                        <li>pokud je už registrován, může se přihlásit</li>
+                    </ul>
+                </li>
+                <li style="margin-bottom:1em;">
+                    <i class="role fas fa-user-graduate"></i>          <span class="font-weight-bold">Registrovaný a přihlášený student</span>
+                    <ul>
+                        <li>může si změnit heslo</li>
+                        <li>může si prohlížet Celkové přehledy</li>
+                        <li>může si prohlížet svoje personalizované podrobné přehledy</li>
+                    </ul>
+                </li>
+                <li style="margin-bottom:1em;">
+                    <i class="role fas fa-user-tie"></i>          <span class="font-weight-bold">Registrovaný a přihlášený učitel</span>
+                    <ul>
+                        <li>může si změnit heslo</li>
+                        <li>může si prohlížet Celkové přehledy</li>
+                        <li>může si prohlížet přehledy všech studentů</li>
+                        <li>může si prohlížet personalizované podrobné přehledy jednotlivých studentů</li>
+                        <li>může aktualizovat data</li>
+                        <li>může resetovat heslo libovolnému studentovi</li>
+                        <li>může resetovat celou databázi</li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <div class="row">
+        <div id="navod_lokalni_instal" class="col-sm-6">
+            <h2 id="navod_lokalni_instal_nadpis">Jak si aplikaci nainstaluji a spustím lokálně</h2>
+
+            <p>Je to velmi jednoduché, stačí jen několik málo kroků.
+                <button id="navod_lokalni_instal_rozbalit" class="btn btn-link" data-toggle="collapse" data-target="#navod_podrobne_instal">Více informací</button>
+            </p>
+            <h2 id="navod_verze_nadpis">Verze aplikace</h2>
+
+            <p>Existuje několik odlišných verzí...
+                <button id="navod_verze_rozbalit" class="btn btn-link" data-toggle="collapse" data-target="#navod_podrobne_verze">Více informací</button>
+            </p>
+        </div>
+        <div id="navod_stu_registrace" class="col-sm-6">
+            <h2 id="navod_stu_registrace_nadpis">Jak se jako student mohu zaregistrovat</h2>
+
+            <p>Zvolíte <span class="font-weight-bold">Nepřihlášený / Registrace</span> a dále z výběrového seznamu vyberete svoje osobní číslo.
+                Zadáte nové heslo a potvrdíte jej.</p>
+            <p>Pokud svoje heslo následně zapomenete, nemůžete dále aplikaci používat v roli studenta.
+                Řešením může být, že požádáte <i class="role_navod fas fa-user-tie"></i> učitele, aby vám heslo vyresetoval.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div id="navod_podrobne_instal" class="col-12 collapse text-justify text-dark bg-light rounded">
+            <h2 id="navod_podrobne_instal_nadpis">Postup instalace</h2>
+            <ol>
+                <li>Rozbalte instalační soubor do adresáře, odkud se spouští <span class="text-monospace text-danger">localhost</span></li>
+                <li>V lokální SŘBD si založte novou databázi, ideálně se jménem <span class="text-monospace text-danger">upa</span>; databáze bude prázdná</li>
+                <li>V souboru <span class="text-monospace text-danger">konstanty-zmenit.inc.php</span> zkontrolujte a případně přenastavte hodnoty
+                    konstant <span class="text-monospace text-danger">DB__SERVER</span>,
+                    <span class="text-monospace text-danger">DB__NAME</span>,
+                    <span class="text-monospace text-danger">DB__USER</span> a
+                    <span class="text-monospace text-danger">DB__PASS</span></li>
+                <li>Do adresního řádku webového prohlížeče zadejte <span class="text-monospace text-danger">http://localhost/upa/index.php</span></li>
+                <li>Po úplně prvním spuštění se v SŘBD <span class="font-italic">automaticky</span> vytvoří tři tabulky:
+                    <span class="text-monospace text-danger">nastaveni</span> (předvyplněná), <span class="text-monospace text-danger">studenti</span>
+                    (prázdná) a <span class="text-monospace text-danger">ulohy</span> (prázdná)
+                </li>
+                <li>Zvolte submenu <i class="role_navod fas fa-user-secret"></i> <span class="font-weight-bold">Nepřihlášený / Registrace</span></li>
+                <li>Zaregistrujte se v roli <i class="role_navod fas fa-user-tie"></i> <span class="font-weight-bold">Učitel</span> – protože je učitel pouze jeden, stačí jen zadat jakékoliv počáteční heslo</li>
+                <li>V menu <span class="font-weight-bold"><i class="menu-small fas fa-cog"></i> Nastavení</span> v záložce <span class="font-weight-bold">Počáteční inicializace</span> načtěte soubor
+                    <span class="text-monospace text-danger">studenti-debug.csv</span></li>
+                <li>V menu <span class="font-weight-bold"><i class="menu-small fas fa-cog"></i> Nastavení</span> v záložce <span class="font-weight-bold"><i class="fas fa-database"></i> Aktualizace úloh</span> načtěte soubor
+                    <span class="text-monospace text-danger">ulohy-debug.csv</span></li>
+                <li>Od této chvíle můžete aplikaci používat</li>
+                <li>Pro práci s reálnými (anonymizovanými) daty načtěte výše uvedeným postupem soubory
+                    <span class="text-monospace text-danger">studenti.csv</span>
+                    a <span class="text-monospace text-danger">ulohy.csv</span></li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div id="navod_podrobne_verze" class="col-12 collapse text-justify text-dark bg-light rounded">
+            <h2 id="navod_podrobne_verze_nadpis">Existující verze aplikace</h2>
+            <ul>
+                <li><span class="font-weight-bold">Verze 1.0</span></li>
+                <ul>
+                    <li>MVC postavený na třídách</li>
+                    <li>Bootstrap 4</li>
+                    <li>JavaScript pro řazení v tabulce a pro zobrazení grafů</li>
+                    <li>nepoužity Twig šablony</li>
+                    <li>neoptimalizované dotazy do DB</li>
+                </ul>
+            </ul>
+        </div>
+    </div>
+</article>
+
+{% endblock %}

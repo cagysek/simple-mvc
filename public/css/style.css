@@ -1,0 +1,31 @@
+/* ikona v roli */
+i.role {
+    font-size: 2em;
+    color: Tomato;
+    margin-top: -1em;
+}
+
+/* ikona v roli v navodu */
+i.role_navod {
+    font-size: 1.5em;
+    color: Tomato;
+    margin-top: -1em;
+    margin-bottom: -1em;
+    padding-bottom: -1em;
+}
+
+/* ikona v menu velka */
+i.menu {
+    font-size: 2em;
+}
+
+/* ikona v menu mala */
+i.menu-small{
+    font-size: 1em;
+}
+
+/* ikona odkazu v hlavicce */
+i.odkaz {
+    font-size: 0.5em;
+    color:#7abaff;
+}

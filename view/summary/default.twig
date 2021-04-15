@@ -1,0 +1,95 @@
+{% extends "layout.twig" %}
+
+
+{% block content %}
+
+<article class="container">
+    <div class="row">
+        <div class="col-12 text-primary text-center">
+            <h2 id="celkove_nadpis_tabulka">
+                <abbr id="celkove_nadpis_tabulka_datum" title="ke dni 2021-04-01">Celkový přehled
+                </abbr>
+            </h2>
+        </div>
+        <div class="col-12 table-responsive">
+            <table id="celkove_tab" class="table table-sm table-bordered table-striped table-hover">
+                <thead class="thead-dark text-center">
+                <tr id="celkove_tab_tr_0">
+                    <th rowspan="2" class="align-middle">&nbsp;</th>
+                    <th rowspan="2" class="align-middle">Suma / Průměr</th>
+                    <th colspan="5">OKS</th></tr>
+                <tr>
+                    <th>01</th>
+                    <th>02</th>
+                    <th>03</th>
+                    <th>04</th>
+                    <th>05</th>
+
+                </tr>
+                </thead>
+                <tbody class="text-center">
+                <tr id="celkove_tab_tr_1" class="table-warning position-relative">
+                    <td class="text-left"><abbr title="Počet studentů s alespoň jedním pokusem o odevzdání">Odevzdávalo
+                        studentů</abbr></td>
+                    <td class="align-middle"><abbr id="celkove_tab_tr_1_vsichni_studenti" title="Počet všech zapsaných studentů">
+                        58
+                    </abbr> /
+                        <abbr id="celkove_tab_tr_1_aktivni_studenti" title="Počet aktivních studentů">
+                            52
+                        </abbr></td>
+                    <td class="align-middle">52</td><td class="align-middle">52</td><td class="align-middle">36</td><td class="align-middle">30</td><td class="align-middle">50</td>
+                </tr>
+                <tr id="celkove_tab_tr_2" class="table-success position-relative">
+                    <td class="text-left"><abbr title="Počet studentů, kteří nakonec úlohu odevzdali úspěšně">Počet úspěšných
+                        studentů</abbr></td>
+                    <td style="vertical-align:middle;">—</td>
+                    <td class="align-middle">52</td><td class="align-middle">52</td><td class="align-middle">36</td><td class="align-middle">28</td><td class="align-middle">50</td>
+                </tr>
+                <tr id="celkove_tab_tr_3" class="table-danger position-relative">
+                    <td class="text-left"><abbr title="Student odevzdal neúspěšně úlohu alespoň jednou a následně rezignoval">Vzdalo
+                        v průběhu studentů</abbr></td>
+                    <td id="celkove_tab_tr_3_suma" class="align-middle">∑&nbsp;2</td>
+                    <td class="align-middle">–</td><td class="align-middle">–</td><td class="align-middle">–</td><td class="align-middle">2</td><td class="align-middle">–</td>
+                </tr>
+                <tr id="celkove_tab_tr_4" class="table-warning position-relative">
+                    <td class="text-left"><abbr title="Celkem úspěšných a neúspěšných odevzdání">Počet všech odevzdání</abbr></td>
+                    <td id="celkove_tab_tr_4_suma" class="align-middle">∑&nbsp;470</td>
+                    <td class="align-middle">185</td><td class="align-middle">69</td><td class="align-middle">62</td><td class="align-middle">61</td><td class="align-middle">93</td>
+                </tr>
+                <tr id="celkove_tab_tr_5" class="table-danger position-relative">
+                    <td class="text-left"><abbr title="Neúspěšná odevzdání – podmnožina všech odevzdání">Počet neúspěšných
+                        odevzdání</abbr></td>
+                    <td id="celkove_tab_tr_5_suma" class="align-middle">∑&nbsp;251</td>
+                    <td class="align-middle">133</td><td class="align-middle">17</td><td class="align-middle">26</td><td class="align-middle">33</td><td class="align-middle">42</td>
+                </tr>
+                <tr id="celkove_tab_tr_6" class="table-success position-relative">
+                    <td class="text-left"><abbr title="Úspěšná odevzdání – podmnožina všech odevzdání">Počet úspěšných
+                        odevzdání</abbr></td>
+                    <td id="celkove_tab_tr_6_suma" class="align-middle">∑&nbsp;219</td>
+                    <td class="align-middle">52</td><td class="align-middle">52</td><td class="align-middle">36</td><td class="align-middle">28</td><td class="align-middle">51</td>
+                </tr>
+                <tr id="celkove_tab_tr_7" class="table-success position-relative">
+                    <td class="text-left"><abbr title="Poměr úspěšných odevzdání ku všem odevzdáním">Procento úspěšnosti</abbr>
+                    </td>
+                    <td id="celkove_tab_tr_7_suma" class="align-middle">ø&nbsp;46&nbsp;%</td>
+                    <td class="align-middle">28&nbsp;%</td><td class="align-middle">75&nbsp;%</td><td class="align-middle">58&nbsp;%</td><td class="align-middle">45&nbsp;%</td><td class="align-middle">54&nbsp;%</td>
+                </tr>
+                <tr id="celkove_tab_tr_8" class="position-relative">
+                    <td class="text-left"><abbr title="Průměrný počet odevzdání do úspěšného pokusu nebo rezignace">Průměr
+                        odevzdání na studenta</abbr></td>
+                    <td id="celkove_tab_tr_8_suma" class="align-middle">ø&nbsp;1.6</td>
+                    <td class="align-middle">3</td><td class="align-middle">1</td><td class="align-middle">1</td><td class="align-middle">2</td><td class="align-middle">1</td>
+                </tr>
+                <tr id="celkove_tab_tr_9" class="position-relative">
+                    <td class="text-left"><abbr title="Maximální počet odevzdání u libovolného studenta do úspěšného pokusu nebo rezignace">Maximum
+                        odevzdání na studenta</abbr></td>
+                    <td id="celkove_tab_tr_9_suma" class="align-middle">15</td>
+                    <td class="align-middle">15</td><td class="align-middle">6</td><td class="align-middle">5</td><td class="align-middle">12</td><td class="align-middle">8</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</article>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{
+  "name": "cagy/upa",
+  "authors": [
+    {
+      "name": "Jan Čarnogurský",
+      "email": "cagy@students.zcu.cz"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\": "."
+    }
+  },
+  "require": {
+    "twig/twig": "^3.0",
+    "ext-pdo": "*"
+  },
+  "description": ""
+}
