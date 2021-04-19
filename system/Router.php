@@ -60,6 +60,6 @@ class Router
 
         $newCallback = [new $controller, $action];
 
-        return call_user_func_array($newCallback, ['a' => "ab"]);
+        return call_user_func_array($newCallback, [$this->request]);
     }
 }

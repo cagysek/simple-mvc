@@ -98,7 +98,7 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div id="nep_modal_registrace_uci" class="container tab-pane fade"><br>
-                            <form action="index.php" method="post">
+                            <form action="/public/register-teacher" method="post">
                                 <div class="form-group">
                                     <input id="nep_modal_registrace_uci_heslo" type="password" class="form-control" placeholder="Úplně první zadání hesla" name="regHesloUci" title="Učitel při registraci zadá jakékoliv své budoucí heslo." required="">
                                     <div class="invalid-feedback">Prosím, zadejte svoje nové heslo.</div>
@@ -111,7 +111,7 @@
                             </form>
                         </div>
                         <div id="nep_modal_registrace_stu" class="container tab-pane active"><br>
-                            <form action="index.php" method="post">
+                            <form action="/public/register-student" method="post">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><abbr title="Nevidíte-li zde svoje osobní číslo, tak se pravděpodobně již pod ním přihlásil někdo jiný.">Osobní číslo</abbr></span>
@@ -223,7 +223,7 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div id="nep_modal_login_uci" class="container tab-pane fade"><br>
-                            <form action="index.php" class="" method="post" validate="">
+                            <form action="/public/login-teacher" class="" method="post" validate="">
                                 <div class="form-group">
                                     <input id="nep_modal_login_uci_heslo" type="password" class="form-control" placeholder="Heslo" name="loginHesloUci" required="">
                                     <div class="invalid-feedback">Prosím, zadejte svoje heslo.</div>
@@ -236,7 +236,7 @@
                             </form>
                         </div>
                         <div id="nep_modal_login_stu" class="container tab-pane active"><br>
-                            <form action="index.php" class="" method="post" validate="">
+                            <form action="/public/login-student" class="" method="post" validate="">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Osobní číslo</span>
@@ -262,6 +262,8 @@
         </div>
     </div>
 </div>
+{{ test }}
+{{ role }} {{ constant('App\\Enum\\EUserRole::TEACHER') }}
 <!-- Obsah stranky -->
 <div class="container">
     <!-- Clanek -->
@@ -296,5 +298,27 @@
 
 <!-- KONEC: JavaScripty ------------- -->
 
+{% if isSetShowTeacherRegistrationError %}
+    <div id="modal_hlaseni" class="modal" aria-modal="true" role="dialog" style="display: block;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="modal_hlaseni_typ" class="modal-title text-warning">Varovné hlášení</h4>
+                    <button id="modal_obecny_bt_zavreni" type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body bg-warning">
+                    <div id="modal_hlaseni_text" class="fetched-data font-weight-bold">Registrace se nezdařila. Byla již provedena dříve.</div>
+                </div>
+                <div class="modal-footer">
+                    <button id="modal_hlaseni_zavrit" type="button" class="btn btn-secondary" data-dismiss="modal">Zavřít</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#modal_hlaseni').modal('show')
+    </script>
+{% endif %}
 
 </body></html>

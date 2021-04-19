@@ -34,6 +34,10 @@ class Bootstrap
             {
                 $response->send();
             }
+            elseif ($response->getStatusCode() == EStatusCode::REDIRECT)
+            {
+                header("Location: " . $response->getRedirect());
+            }
             else
             {
                 echo "error";

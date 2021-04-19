@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Model;
+namespace App\Model\Repository;
 
 
 class TaskRepository extends Repository
