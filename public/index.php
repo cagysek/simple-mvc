@@ -19,6 +19,8 @@
     $app->router->addRoute('/public/login-teacher', Router::POST, new Route(\App\controller\BaseController::class, 'loginTeacher'));
     $app->router->addRoute('/public/register-student', Router::POST, new Route(\App\controller\BaseController::class, 'registerStudent'));
     $app->router->addRoute('/public/register-teacher', Router::POST, new Route(\App\controller\BaseController::class, 'registerTeacher'));
+    $app->router->addRoute('/public/logout', Router::POST, new Route(\App\controller\BaseController::class, 'logout'));
+    $app->router->addRoute('/public/change-password', Router::POST, new Route(\App\controller\BaseController::class, 'changePassword'));
 
 
     $app->run();

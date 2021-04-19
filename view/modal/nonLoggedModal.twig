@@ -1,0 +1,144 @@
+{% block body %}
+    <div id="nep_modal_registrace" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 id="nep_modal_registrace_nadpis" class="modal-title">Registrujte se podle své role</h4>
+                    <button id="modal_obecny_bt_zavreni" type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="container">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#nep_modal_registrace_uci">
+                                    <i class="role fas fa-user-tie"></i><span class="font-weight-bold"> Učitel</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#nep_modal_registrace_stu">
+                                    <i class="role fas fa-user-graduate"></i><span class="font-weight-bold"> Student</span></a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div id="nep_modal_registrace_uci" class="container tab-pane fade"><br>
+                                <form action="/public/register-teacher" method="post">
+                                    <div class="form-group">
+                                        <input id="nep_modal_registrace_uci_heslo" type="password" class="form-control" placeholder="Úplně první zadání hesla" name="regHesloUci" title="Učitel při registraci zadá jakékoliv své budoucí heslo." required="">
+                                        <div class="invalid-feedback">Prosím, zadejte svoje nové heslo.</div>
+                                    </div>
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <input id="nep_modal_registrace_uci_submit" type="submit" class="btn btn-primary" name="OBSLUHA_navod_registraceUcitel" value="Zaregistrovat">
+                                        <button id="nep_modal_registrace_uci_zrusit" type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div id="nep_modal_registrace_stu" class="container tab-pane active"><br>
+                                <form action="/public/register-student" method="post">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><abbr title="Nevidíte-li zde svoje osobní číslo, tak se pravděpodobně již pod ním přihlásil někdo jiný.">Osobní číslo</abbr></span>
+                                        </div>
+                                        <select id="nep_modal_registrace_stu_oscislo" class="form-control" name="regOsCisloUci">
+                                            <option id="oscislo_nevybrano">--- Nevybráno ---</option>
+                                            {% for studentSchoolNumber in nonRegisteredStudents %}
+                                                <option id="regis_{{ studentSchoolNumber }}">{{ studentSchoolNumber }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input id="nep_modal_registrace_stu_heslo" type="password" class="form-control" placeholder="Úplně první zadání hesla" name="regHesloStu" title="Student při registraci zadá jakékoliv své budoucí heslo." required="">
+                                        <div class="invalid-feedback">Prosím, zadejte svoje nové heslo.</div>
+                                    </div>
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <input id="nep_modal_registrace_stu_submit" type="submit" class="btn btn-primary" name="OBSLUHA_navod_registraceStudent" value="Zaregistrovat">
+                                        <button id="nep_modal_registrace_stu_zrusit" type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="nep_modal_login" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 id="nep_modal_login_nadpis" class="modal-title">Přihlaste se podle své role</h4>
+                    <button id="modal_obecny_bt_zavreni" type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="container">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#nep_modal_login_uci">
+                                    <i class="role fas fa-user-tie"></i><span class="font-weight-bold"> Učitel</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#nep_modal_login_stu">
+                                    <i class="role fas fa-user-graduate"></i><span class="font-weight-bold"> Student</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div id="nep_modal_login_uci" class="container tab-pane fade"><br>
+                                <form action="/public/login-teacher" class="" method="post" validate="">
+                                    <div class="form-group">
+                                        <input id="nep_modal_login_uci_heslo" type="password" class="form-control" placeholder="Heslo" name="loginHesloUci" required="">
+                                        <div class="invalid-feedback">Prosím, zadejte svoje heslo.</div>
+                                    </div>
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <input id="nep_modal_login_uci_submit" type="submit" class="btn btn-primary" name="OBSLUHA_navod_loginUcitel" value="Přihlásit">
+                                        <button id="nep_modal_login_uci_zrusit" type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div id="nep_modal_login_stu" class="container tab-pane active"><br>
+                                <form action="/public/login-student" class="" method="post" validate="">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Osobní číslo</span>
+                                        </div>
+                                        <select id="nep_modal_login_stu_oscislo" class="form-control" name="loginOsCisloUci">
+                                            <option id="oscislo_nevybrano">--- Nevybráno ---</option>
+                                            {% for studentSchoolNumber in registeredStudents %}
+                                                <option id="login_{{ studentSchoolNumber }}">{{ studentSchoolNumber }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="nep_modal_login_stu_heslo" type="password" class="form-control" placeholder="Heslo" name="loginHesloStu" required="">
+                                        <div class="invalid-feedback">Prosím, zadejte svoje heslo.</div>
+                                    </div>
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <input id="nep_modal_login_stu_submit" type="submit" class="btn btn-primary" name="OBSLUHA_navod_loginStudent" value="Přihlásit">
+                                        <button id="nep_modal_login_stu_zrusit" type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

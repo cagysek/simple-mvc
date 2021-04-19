@@ -6,13 +6,13 @@ namespace App\Model\Session;
 
 class SessionModel
 {
-    const TEACHER_REGISTRATION_ERROR = "teacher_registration_error";
-
-    const LOGIN_ERROR = "login_error";
+    const ERROR = "error";
 
     const USER_ROLE = "user_role";
 
     const IS_LOGGED = "is_logged";
+
+    const STUDENT_SCHOOL_NUMBER = "student_school_number";
 
     public function loginUser(string $role) : void
     {
@@ -20,10 +20,21 @@ class SessionModel
         $this->setIsLogged(true);
     }
 
+    public function setStudentSchoolNumber(?string $studentSchoolNumber) : void
+    {
+        $_SESSION[self::STUDENT_SCHOOL_NUMBER] = $studentSchoolNumber;
+    }
+
+    public function getStudentSchoolNumber() : ?string
+    {
+        return $_SESSION[self::STUDENT_SCHOOL_NUMBER] ?? NULL;
+    }
+
     public function logOutUser() : void
     {
         $this->setUserRole(NULL);
         $this->setIsLogged(false);
+        $this->setStudentSchoolNumber(NULL);
     }
 
     public function getUserRole() : ?string
@@ -36,9 +47,19 @@ class SessionModel
         $_SESSION[self::USER_ROLE] = $userRole;
     }
 
-    public function setShowTeacherRegistrationError(bool $state) : void
+    public function setError(?string $text) : void
     {
-        $_SESSION[self::TEACHER_REGISTRATION_ERROR] = $state;
+        $_SESSION[self::ERROR] = $text;
+    }
+
+    public function getError() : ?string
+    {
+        if (isset($_SESSION[self::ERROR]))
+        {
+            return $_SESSION[self::ERROR];
+        }
+
+        return NULL;
     }
 
     public function setIsLogged(bool $isLogged) : void
@@ -51,15 +72,6 @@ class SessionModel
         return (bool)$_SESSION[self::IS_LOGGED] ?? false;
     }
 
-    public function isSetShowTeacherRegistrationError() : bool
-    {
-        if (isset($_SESSION[self::TEACHER_REGISTRATION_ERROR]))
-        {
-            return $_SESSION[self::TEACHER_REGISTRATION_ERROR];
-        }
-
-        return false;
-    }
 
     public function setShowLoginError(bool $state) : void
     {
@@ -74,7 +86,6 @@ class SessionModel
 
     public function clearTmpData()
     {
-        $this->setShowLoginError(false);
-        $this->setShowTeacherRegistrationError(false);
+        $this->setError(NULL);
     }
 }

@@ -34,7 +34,7 @@ class HomeController extends BaseController
             "tab" => "navod",
         ];
 
-        return parent::render("home/default.twig", $data);
+        return parent::render("template/home/default.twig", $data);
     }
 
     public function actionDetail()

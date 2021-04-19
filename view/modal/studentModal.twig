@@ -1,0 +1,30 @@
+{% block body %}
+    <div id="stu_modal_zmena" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 id="stu_modal_zmena_nadpis" class="modal-title">Změna hesla pro roli &nbsp;<i class="role fas fa-user-graduate"></i><span class="font-weight-bold"> Student</span></h4>
+                    <button id="modal_obecny_bt_zavreni" type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <h4 id="stu_modal_zmena_oscislo" class="text-info text-center font-weight-bold">
+                        A18B0214P</h4>
+                    <form action="index.php" class="" method="post" validate="">
+                        <div class="form-group">
+                            <input id="stu_modal_zmena_heslo" type="password" class="form-control" placeholder="Nové heslo" name="zmenaHesloStu" required="">
+                            <div class="invalid-feedback">Prosím, zadejte nové heslo.</div>
+                        </div>
+                        <div class="modal-footer">
+                            <input id="stu_modal_zmena_submit" type="submit" class="btn btn-primary" name="OBSLUHA_navod_zmenaHeslaStudent" value="Změnit heslo">
+                            <button id="stu_modal_zmena_zrusit" type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit změnu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

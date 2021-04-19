@@ -38,11 +38,11 @@ class BaseController
 
         $commonParams = [
             'students_count' => $this->studentRepository->getTotalStudentsCount(),
-            'isSetShowTeacherRegistrationError' => $this->sessionModel->isSetShowTeacherRegistrationError(),
-            'test' => $this->settingsRepository->getTeacherPassword(),
+            'errorMsg' => $this->sessionModel->getError(),
+            'nonRegisteredStudents' => $this->studentRepository->getStudentsSchoolNumbersWithoutPassword(),
+            'registeredStudents' => $this->studentRepository->getStudentSchoolNumbersWithPassword(),
             'role' => $this->sessionModel->getUserRole(),
         ];
-
 
         $data = array_merge($params,$commonParams);
 
@@ -53,30 +53,78 @@ class BaseController
 
     public function actionLoginStudent(Request $request) : Response
     {
+        $studentSchoolNumber = $request->getBody()['loginOsCisloUci'];
+        $password = $request->getBody()['loginHesloStu'];
 
-        //$_SESSION["test"] = $request->getBody()["regHesloUci"];
+        if (empty($password))
+        {
+            return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+        }
 
-        $this->sessionModel->setShowTeacherRegistrationError(true);
+        $studentPassword = $this->studentRepository->getStudentPassword($studentSchoolNumber);
+
+        if (password_verify($password, $studentPassword))
+        {
+            $this->sessionModel->loginUser(EUserRole::STUDENT);
+            $this->sessionModel->setStudentSchoolNumber($studentSchoolNumber);
+
+        }
+        else
+        {
+            $this->sessionModel->setError("Přihlášení se nezdařilo. Zadané heslo není správné.");
+        }
 
         return new Response(EStatusCode::REDIRECT, "", "/public/navod");
     }
 
     public function actionLoginTeacher(Request $request) : Response
     {
+        $password = $request->getBody()['loginHesloUci'];
 
-        //$_SESSION["test"] = $request->getBody()["regHesloUci"];
+        if (empty($password))
+        {
+            return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+        }
 
-        $this->sessionModel->setShowTeacherRegistrationError(true);
+        $teacherPassword = $this->settingsRepository->getTeacherPassword();
+
+        if (password_verify($password, $teacherPassword))
+        {
+            $this->sessionModel->loginUser(EUserRole::TEACHER);
+        }
+        else
+        {
+            $this->sessionModel->setError("Přihlášení se nezdařilo. Zadané heslo není správné.");
+        }
 
         return new Response(EStatusCode::REDIRECT, "", "/public/navod");
     }
 
     public function actionRegisterStudent(Request $request) : Response
     {
+        $schoolNumber = $request->getBody()['regOsCisloUci'];
+        $password = $request->getBody()['regHesloStu'];
 
-        //$_SESSION["test"] = $request->getBody()["regHesloUci"];
+        if (empty($schoolNumber) || $schoolNumber == "--- Nevybráno ---")
+        {
+            $this->sessionModel->setError("Nebylo zvoleno žádné osobní číslo.");
 
-        $this->sessionModel->setShowTeacherRegistrationError(true);
+            return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+        }
+
+        if (empty($password))
+        {
+            $this->sessionModel->setError("Nebylo zvoleno žádné heslo.");
+
+            return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+        }
+
+        $newPasswordHash = password_hash($password, PASSWORD_BCRYPT);
+
+        $this->studentRepository->updateStudentPassword($schoolNumber, $newPasswordHash);
+
+        $this->sessionModel->loginUser(EUserRole::STUDENT);
+        $this->sessionModel->setStudentSchoolNumber($schoolNumber);
 
         return new Response(EStatusCode::REDIRECT, "", "/public/navod");
     }
@@ -94,7 +142,7 @@ class BaseController
 
         if (empty($teacherPassword))
         {
-            $newPasswordHash = password_hash($teacherPassword, PASSWORD_BCRYPT);
+            $newPasswordHash = password_hash($password, PASSWORD_BCRYPT);
 
             $this->settingsRepository->updateTeacherPassword($newPasswordHash);
 
@@ -102,16 +150,21 @@ class BaseController
         }
         else
         {
-            $this->sessionModel->setShowTeacherRegistrationError(true);
+            $this->sessionModel->setError("Registrace se nezdařila. Byla již provedena dříve.");
         }
 
         return new Response(EStatusCode::REDIRECT, "", "/public/navod");
     }
 
-    public function actionLogOut() : Response
+    public function actionLogout() : Response
     {
         $this->sessionModel->logOutUser();
 
         return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+    }
+
+    public function actionChangePassword(Request $request) : Response
+    {
+
     }
 }

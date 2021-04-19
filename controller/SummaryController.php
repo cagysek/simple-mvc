@@ -17,6 +17,6 @@ class SummaryController extends BaseController
             "tab" => "celkove",
         ];
 
-        return parent::render("summary/default.twig", $data);
+        return parent::render("template/summary/default.twig", $data);
     }
 }
