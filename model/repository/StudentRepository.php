@@ -16,14 +16,6 @@ class StudentRepository extends Repository
     const COL_LASTNAME = 'lastname';
     const COL_PASSWORD = 'password';
 
-    /**
-     * StudentRepository constructor.
-     *
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     public function getTotalStudentsCount() : int
     {
@@ -60,7 +52,7 @@ class StudentRepository extends Repository
 
     public function updateStudentPassword(string $schoolNumber, string $password) : void
     {
-        $statement = $this->pdo->prepare('UPDATE student SET `password` = ? WHERE `school_number` = ?');
+        $statement = $this->getConnection()->prepare('UPDATE student SET `password` = ? WHERE `school_number` = ?');
 
         $statement->execute([$password, $schoolNumber]);
     }

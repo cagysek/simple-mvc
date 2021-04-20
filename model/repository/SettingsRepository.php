@@ -24,7 +24,7 @@ class SettingsRepository extends Repository
 
     public function updateTeacherPassword(string $newPassword) : void
     {
-        $statement = $this->pdo->prepare('UPDATE settings SET `value` = ? WHERE `key` = "teacher_password"');
+        $statement = $this->getConnection()->prepare('UPDATE settings SET `value` = ? WHERE `key` = "teacher_password"');
 
         $statement->execute([$newPassword]);
     }

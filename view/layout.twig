@@ -18,6 +18,8 @@
             Nepřihlášený
         {% endif %}
     </title>
+
+    {% block head %}{% endblock %}
 </head>
 <body>
 <!-- nadpis stranky -->
@@ -64,7 +66,7 @@
 <!-- Obsah stranky -->
 <div class="container">
     <!-- Clanek -->
-    <div id="content">{% block content %}{% endblock %}</div>
+    {% block content %}{% endblock %}
 </div>
 <!-- KONEC: Obsah stranky -->
 
@@ -77,7 +79,7 @@
 <script src="/public/js/poper.min.js" crossorigin="anonymous"></script>
 <script src="/public/js/bootstrap.min.js"></script>
 
-
+{% block scripts %}{% endblock %}
 
 <script>
     $(document).ready(function(){

@@ -12,21 +12,12 @@ class Repository
 
     protected string $tableName;
 
-    protected PDO $pdo;
-
-    /**
-     * Repository constructor.
-     *
-     */
-    public function __construct()
-    {
-        $this->pdo = DatabaseService::getInstance();
-    }
+    private PDO $pdo;
 
 
     protected function findAll() : array
     {
-        $statement = $this->pdo->prepare("SELECT * FROM " . $this->tableName);
+        $statement = $this->getConnection()->prepare("SELECT * FROM " . $this->tableName);
 
         $statement->execute();
 
@@ -62,11 +53,23 @@ class Repository
 
         }
 
-        $statement = $this->pdo->prepare($sql);
+        $statement = $this->getConnection()->prepare($sql);
 
         $statement->execute($params);
 
         return $statement->fetchAll();
+    }
+
+    protected function getConnection() : PDO
+    {
+        if (!isset($this->pdo))
+        {
+            $this->pdo = DatabaseService::getInstance();
+
+            return $this->pdo;
+        }
+
+        return $this->pdo;
     }
 
 
