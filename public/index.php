@@ -20,7 +20,9 @@
     $app->router->addRoute('/public/register-student', Router::POST, new Route(\App\controller\BaseController::class, 'registerStudent'));
     $app->router->addRoute('/public/register-teacher', Router::POST, new Route(\App\controller\BaseController::class, 'registerTeacher'));
     $app->router->addRoute('/public/logout', Router::POST, new Route(\App\controller\BaseController::class, 'logout'));
+    $app->router->addRoute('/public/logout', Router::GET, new Route(\App\controller\BaseController::class, 'logout'));
     $app->router->addRoute('/public/change-password', Router::POST, new Route(\App\controller\BaseController::class, 'changePassword'));
+    $app->router->addRoute('/public/osobniCislo', Router::GET, new Route(\App\controller\SummaryController::class, 'studentInfo'));
 
 
     $app->run();

@@ -42,6 +42,7 @@ class BaseController
             'nonRegisteredStudents' => $this->studentRepository->getStudentsSchoolNumbersWithoutPassword(),
             'registeredStudents' => $this->studentRepository->getStudentSchoolNumbersWithPassword(),
             'role' => $this->sessionModel->getUserRole(),
+            'selectedStudentNumber' => $this->sessionModel->getStudentSchoolNumber(),
         ];
 
         $data = array_merge($params,$commonParams);

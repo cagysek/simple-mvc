@@ -44,7 +44,13 @@
 </header>
 
 
-{{  block("body", "other/menu.twig") }}
+{%  if  role == constant('App\\Enum\\EUserRole::TEACHER') %}
+    {{  block("body", "other/teacherMenu.twig") }}
+{% elseif role == constant('App\\Enum\\EUserRole::STUDENT') %}
+    {{  block("body", "other/studentMenu.twig") }}
+{% else %}
+    {{  block("body", "other/nonLoggedMenu.twig") }}
+{% endif %}
 
 
 {%  if  role == constant('App\\Enum\\EUserRole::TEACHER') %}

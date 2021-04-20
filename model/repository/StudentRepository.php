@@ -65,9 +65,9 @@ class StudentRepository extends Repository
         $statement->execute([$password, $schoolNumber]);
     }
 
-    public function getStudentPassword(string $studentSchoolNumber) : ?string
+    public function getStudentPassword(string $schoolNumber) : ?string
     {
-        $data = $this->findBy([self::COL_SCHOOL_NUMBER => $studentSchoolNumber]);
+        $data = $this->findBy([self::COL_SCHOOL_NUMBER => $schoolNumber]);
 
         if (empty($data))
         {
@@ -75,5 +75,17 @@ class StudentRepository extends Repository
         }
 
         return $data[0][self::COL_PASSWORD];
+    }
+
+    public function getStudentBySchoolNumber(string $schoolNumber) : ?array
+    {
+        $student = $this->findBy([self::COL_SCHOOL_NUMBER => $schoolNumber]);
+
+        if (empty($student))
+        {
+            return NULL;
+        }
+
+        return $student[0];
     }
 }

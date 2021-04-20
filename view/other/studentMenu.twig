@@ -1,0 +1,61 @@
+{% block body %}
+
+    <!-- Menu -->
+    <nav class="navbar navbar-expand-md bg-secondary navbar-dark sticky-top">
+        <div class="container">
+        <span id="menu_role" class="navbar-brand dropdown">
+        <span id="stu_menu" class="nav-link dropdown-toggle" data-toggle="dropdown">
+            <i class="role fas fa-user-graduate"></i>
+            Student
+        </span>
+    <div class="dropdown-menu">
+      <a id="stu_menu_zmena_heslo" class="dropdown-item" href="#" data-toggle="modal" data-target="#stu_modal_zmena">
+          Změna hesla
+      </a>
+      <form action="/public/logout" method="post">
+        <button id="stu_menu_logout" type="submit" class="dropdown-item btn-link" name="OBSLUHA_logout_logoutStudent">
+            Logout
+            <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </form>
+    </div>
+        </span>
+            <!-- Toggler/collapsibe Button -->
+            <button id="menu_collapsible_button" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu_collapsible_navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navbar links -->
+            <div id="menu_collapsible_navbar" class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    <li id="menu_navod" class="nav-item">
+                        <a class="nav-link {% if tab == "navod" %}active{% endif %}" href="navod">
+                            <i class="menu-small fas fa-book-open"></i>
+                            Návod
+                        </a>
+                    </li>
+                    <li id="menu_celkove" class="nav-item">
+                        <a class="nav-link {% if tab == "celkove" %}active{% endif %}" href="celkove">
+                            Celkově
+                            <span id="menu_celkove_vsech_studentu" title="Počet všech zapsaných studentů" class="badge badge-primary badge-pill">
+                                {{ students_count }}
+                            </span>
+                        </a>
+                    </li>
+                    <li id="menu_osobniCislo" class="nav-item">
+                        <a class="nav-link {% if tab == "osobniCislo" %}active{% endif %}" href="osobniCislo">
+                            <i class="menu-small fas fa-user-graduate"></i>
+                            {{ selectedStudentNumber }}
+                        </a>
+                    </li>
+                    <li id="menu_logout" class="nav-item">
+                        <a class="nav-link" href="/public/logout">
+                            <i class="menu fas fa-sign-out-alt"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- KONEC: Menu -->
+
+{% endblock %}

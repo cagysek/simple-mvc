@@ -1,0 +1,46 @@
+{% block body %}
+
+    <!-- Menu -->
+    <nav class="navbar navbar-expand-md bg-secondary navbar-dark sticky-top">
+        <div class="container">
+        <span id="menu_role" class="navbar-brand dropdown">
+            <span id="nep_menu" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                <i class="role fas fa-user-secret"></i>
+                Nepřihlášený
+            </span>
+            <div class="dropdown-menu">
+                <a id="nep_menu_login" class="dropdown-item" href="#" data-toggle="modal" data-target="#nep_modal_login">
+                    Login
+                    <i class="fas fa-sign-in-alt"></i>
+                </a>
+                <a id="nep_menu_registrace" class="dropdown-item" href="#" data-toggle="modal" data-target="#nep_modal_registrace">
+                    Registrace
+                </a>
+            </div>
+        </span>
+            <!-- Toggler/collapsibe Button -->
+            <button id="menu_collapsible_button" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu_collapsible_navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navbar links -->
+            <div id="menu_collapsible_navbar" class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    <li id="menu_navod" class="nav-item">
+                        <a class="nav-link {% if tab == "navod" %}active{% endif %}" href="navod">
+                            <i class="menu-small fas fa-book-open"></i> Návod
+                        </a>
+                    </li>
+
+                    <li id="menu_celkove" class="nav-item">
+                        <a class="nav-link {% if tab == "celkove" %}active{% endif %}" href="celkove">
+                            Celkově <span id="menu_celkove_vsech_studentu" title="Počet všech zapsaných studentů" class="badge badge-primary badge-pill">{{ students_count }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <!-- KONEC: Menu -->
+
+{% endblock %}

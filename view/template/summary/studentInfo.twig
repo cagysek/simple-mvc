@@ -1,0 +1,98 @@
+{% extends "layout.twig" %}
+
+
+{% block content %}
+
+    <article class="container">
+        <div class="row">
+            <div class="col-12 text-primary text-center">
+                <h2 id="oscislo_nadpis_tabulka"><span class="text-success font-weight-bold">
+                <span id="oscislo_jmeno">Jakub</span> <span id="oscislo_prijmeni">Churavý</span>         </span> – podrobný přehled</h2>
+            </div>
+            <div class="col-12 pb-0 mb-4 mt-1">
+                <div class="bg-white progress">
+                    <!-- OK -->
+                    <div class="progress-bar bg-success font-weight-bold" style="width:
+    40%    ">
+                        <abbr id="oscislo_prgbar_ok" title="Úspěšně odevzdaných úloh">OK:
+                            4     </abbr>
+                    </div>
+                    <!-- Chyba -->
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger font-weight-bold" style="width:
+              0%    ">
+                        <abbr id="oscislo_prgbar_chyba" title="Nespěšně odevzdaných úloh">Neúspěch:
+                            0     </abbr>
+                    </div>
+                    <!-- Zbytek -->
+                    <div class="progress-bar bg-secondary font-weight-bold" style="width:
+              60%    ">
+                        <abbr id="oscislo_prgbar_zbytek" title="Bez pokusu o odevzdání">Vůbec:
+                            6          </abbr>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 table-responsive">
+                <table id="oscislo_tab" class="table table-sm table-bordered table-striped table-hover">
+                    <thead class="thead-dark text-center">
+                    <tr id="oscislo_tab_tr_0">
+                        <th rowspan="2" class="align-middle">
+                            A18B0214P        </th>
+                        <th rowspan="2" class="align-middle">Suma / Průměr</th>
+                        <th colspan="5">OKS</th></tr>
+                    <tr>
+                        <th>01</th>
+                        <th>02</th>
+                        <th>03</th>
+                        <th>04</th>
+                        <th>05</th>
+                    </tr>
+                    </thead>
+                    <tbody class="text-center">
+                    <tr id="oscislo_tab_tr_1" class="table-warning position-relative">
+                        <td class="text-left"><abbr title="Celkem úspěšných a neúspěšných odevzdání">Počet všech odevzdání</abbr></td>
+                        <td id="oscislo_tab_tr_1_suma" class="align-middle">∑&nbsp;8</td>
+                        <td class="align-middle">1</td><td class="align-middle">3</td><td class="align-middle">1</td><td class="align-middle">–</td><td class="align-middle">3</td>
+                    </tr>
+                    <tr id="oscislo_tab_tr_2" class="table-danger position-relative">
+                        <td class="text-left"><abbr title="Neúspěšná odevzdání – podmnožina všech odevzdání">Počet neúspěšných
+                                odevzdání</abbr></td>
+                        <td id="oscislo_tab_tr_2_suma" class="align-middle">∑&nbsp;4</td>
+                        <td class="align-middle">–</td><td class="align-middle">2</td><td class="align-middle">–</td><td class="align-middle">–</td><td class="align-middle">2</td>
+                    </tr>
+                    <tr id="oscislo_tab_tr_3" class="table-success position-relative">
+                        <td class="text-left"><abbr title="Úspěšná odevzdání – podmnožina všech odevzdání; je možné úspěšně odevzdat vícekrát">Počet úspěšných
+                                odevzdání</abbr></td>
+                        <td id="oscislo_tab_tr_3_suma" class="align-middle">∑&nbsp;4</td>
+                        <td class="align-middle">1</td><td class="align-middle">1</td><td class="align-middle">1</td><td class="align-middle">–</td><td class="align-middle">1</td>
+                    </tr>
+                    <tr id="oscislo_tab_tr_4" class="table-success position-relative">
+                        <td class="text-left"><abbr title="Poměr úspěšných odevzdání ku všem odevzdáním">Procento úspěšnosti</abbr>
+                        </td>
+                        <td id="oscislo_tab_tr_4_suma" class="align-middle">ø&nbsp;50&nbsp;%</td>
+                        <td class="align-middle">100&nbsp;%</td><td class="align-middle">33&nbsp;%</td><td class="align-middle">100&nbsp;%</td><td class="align-middle">–</td><td class="align-middle">33&nbsp;%</td>
+                    </tr>
+                    <tr id="oscislo_tab_tr_5" class="position-relative">
+                        <td class="text-left"><abbr title="Maximální počet odevzdání do úspěšného pokusu nebo rezignace">Maximum
+                                odevzdání</abbr></td>
+                        <td id="oscislo_tab_tr_5_suma" class="align-middle">3</td>
+                        <td class="align-middle">1</td><td class="align-middle">3</td><td class="align-middle">1</td><td class="align-middle">–</td><td class="align-middle">3</td>
+                    </tr>
+                    <tr id="oscislo_tab_tr_6" class="position-relative">
+                        <td class="text-left align-middle"><abbr title="Datum a čas prvního odevzdání">Začátek odevzdání</abbr></td>
+                        <td id="oscislo_tab_tr_6_suma" class="align-middle"><small>2021-03-02<br>13:11</small></td>
+                        <td class="align-middle"><small>2021-03-02<br>13:11</small></td><td class="align-middle"><small>2021-03-09<br>18:38</small></td><td class="align-middle"><small>2021-03-17<br>23:24</small></td><td class="align-middle">–</td><td class="align-middle"><small>2021-03-31<br>23:12</small></td>
+                    </tr>
+                    <tr id="oscislo_tab_tr_7" class="position-relative">
+                        <td class="text-left align-middle"><abbr title="Datum a čas posledního odevzdání">Konec odevzdání</abbr>
+                        </td>
+                        <td id="oscislo_tab_tr_7_suma" class="align-middle"><small>2021-03-31<br>23:54</small></td>
+                        <td class="align-middle"><small>2021-03-02<br>13:11</small></td><td class="align-middle"><small>2021-03-09<br>18:50</small></td><td class="align-middle"><small>2021-03-17<br>23:24</small></td><td class="align-middle">–</td><td class="align-middle"><small>2021-03-31<br>23:54</small></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </article>
+
+{% endblock %}
