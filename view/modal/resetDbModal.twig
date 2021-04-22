@@ -1,0 +1,31 @@
+{% block body %}
+
+    <div id="nastaveni_reset_DB_modal" class="modal" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 id="nastaveni_reset_DB_modal_nadpis" class="modal-title text-danger">Nebezpečná destruktivní akce
+                        <i class="fas fa-bomb"></i></h4>
+                    <button id="modal_obecny_bt_zavreni" type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <h5 id="nastaveni_reset_DB_modal_text" class="text-dark text-left font-weight-bold">
+                        Tato volba nenávratně vymaže celou databázi.<br>
+                        Jste si jisti, že toto opravdu chcete udělat?
+                    </h5>
+                </div>
+                <div class="modal-footer">
+                    <form action="index.php" class="" method="post" validate="">
+                        <input id="nastaveni_reset_DB_modal_submit" type="submit" class="btn btn-danger" name="OBSLUHA_nastaveni_resetDB" value="Ano, opravdu resetovat DB" title="Další dotaz už nebude!">
+                        <button id="nastaveni_reset_DB_modal_zrusit" type="button" class="btn btn-secondary" data-dismiss="modal">Zrušit akci</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

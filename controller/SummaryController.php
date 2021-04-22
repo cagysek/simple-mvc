@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\enum\EMenuTab;
 use App\Model\Facade\SummaryFacade;
 use App\Model\Repository\StudentRepository;
 use App\Model\Repository\TaskRepository;
@@ -31,7 +32,7 @@ class SummaryController extends BaseController
     {
 
         $data = [
-            "tab" => "celkove",
+            "tab" => EMenuTab::OVERALL,
         ];
 
         return parent::render("template/summary/default.twig", $data);

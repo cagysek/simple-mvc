@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\enum\EMenuTab;
 use App\Service\DatabaseService;
 use App\System\Response;
 
@@ -22,16 +23,8 @@ class HomeController extends BaseController
     public function actionDefault($a) : Response
     {
 
-//        foreach ($result as $row)
-//        {
-//            echo $row['os_cislo'] . '</br>';
-//        }
-//
-//        echo "defaulttt";
-//        echo "$a";
-
         $data = [
-            "tab" => "navod",
+            "tab" => EMenuTab::HELP,
         ];
 
         return parent::render("template/home/default.twig", $data);

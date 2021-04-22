@@ -1,0 +1,116 @@
+{% extends "layout.twig" %}
+
+
+{% block content %}
+
+
+        <div class="row">
+            <div class="col-12 text-dark text-center">
+                <h2 id="nastaveni_nadpis">Servisní činnosti</h2>
+            </div>
+            <div class="container">
+                <!-- Nav tabs -->
+                <ul class="nav nav-pills" role="tablist">
+                    <li class="nav-item">
+                        <a id="nastaveni_menu_inicializace" class="nav-link" data-toggle="pill" href="#nastaveni_inicializace">
+                            <span class="font-weight-bold">Počáteční inicializace</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="nastaveni_menu_aktualizace" class="nav-link active show" data-toggle="pill" href="#nastaveni_aktualizace">
+                            <span class="font-weight-bold"><i class="fas fa-database"></i> Aktualizace úloh</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="nastaveni_menu_reset_heslo" class="nav-link" data-toggle="pill" href="#nastaveni_reset_heslo">
+                            <span class="font-weight-bold">Reset hesla studenta</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="nastaveni_menu_reset_DB" class="nav-link" data-toggle="pill" href="#nastaveni_reset_DB">
+                            <span class="font-weight-bold">Reset databáze</span></a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div id="nastaveni_inicializace" class="container tab-pane"><br>
+                        <h5 id="nastaveni_inicializace_nadpis">Určí, kolik bude celkem úloh, a načte soubor se seznamem všech zapsaných studentů.</h5>
+                        <div class="alert alert-warning">Seznam všech studentů již byl načten. Pokud jej chcete změnit, resetujte nejdříve DB.</div>              <form action="index.php" method="post" validate="">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Počet všech úloh</span>
+                                </div>
+                                <div class="input-group-prepend">
+                                    <input id="nastaveni_inicializace_pocet_uloh" type="number" name="inicPocetUloh" min="1" max="99" maxlength="2" size="2" value="10" required="" disabled="">
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Jméno souboru se seznamem všech studentů</span>
+                                </div>
+                                <div class="input-group-prepend">
+                                    <select id="nastaveni_inicializace_soubory" class="form-control" name="seznamStudentu" disabled="">
+                                        <option>studenti-debug.csv</option>
+                                        <option>studenti.csv</option>
+                                        <option>ulohy-debug.csv</option>
+                                        <option>ulohy.csv</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input id="nastaveni_inicializace_submit" type="submit" class="btn btn-primary" name="OBSLUHA_nastaveni_inicializace" value="Inicializovat" disabled="">
+                            </div>
+                        </form>
+                    </div>
+                    <div id="nastaveni_aktualizace" class="container tab-pane fade active show"><br>
+                        <h5 id="nastaveni_aktualizace_nadpis">Načte ze souboru seznam odevzdaných úloh exportovaný z validátoru.</h5>
+                        <form action="index.php" method="post" validate="">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Jméno souboru odevzdaných úloh</span>
+                                </div>
+                                <div class="input-group-prepend">
+                                    <select id="nastaveni_aktualizace_soubory" class="form-control" name="seznamUloh">
+                                        <option>studenti-debug.csv</option>
+                                        <option>studenti.csv</option>
+                                        <option>ulohy-debug.csv</option>
+                                        <option>ulohy.csv</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input id="nastaveni_aktualizace_submit" type="submit" class="btn btn-primary" name="OBSLUHA_nastaveni_aktualizace" value="Načíst soubor">
+                            </div>
+                        </form>
+                    </div>
+                    <div id="nastaveni_reset_heslo" class="container tab-pane fade"><br>
+                        <h5 id="nastaveni_reset_heslo_nadpis">Zvolenému studentovi se vymaže heslo, čímž se umožní jeho opětovná registrace.</h5>
+                        <form action="index.php" class="" method="post" validate="">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Osobní číslo</span>
+                                </div>
+                                <select id="nastaveni_reset_heslo_oscisla" class="form-control" name="resetOsCislo">
+                                    <option id="oscislo_nevybrano">--- Nevybráno ---</option>
+                                    <option id="login_A18B0214P">A18B0214P</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input id="nastaveni_reset_heslo_submit" type="submit" class="btn btn-primary" name="OBSLUHA_nastaveni_resetHesla" value="Resetovat heslo">
+                            </div>
+                        </form>
+                    </div>
+                    <div id="nastaveni_reset_DB" class="container tab-pane fade"><br>
+                        <h5 id="nastaveni_reset_DB_nadpis">Vymaže celou databázi. Po této akci bude aplikace ve stavu jako před prvním spuštěním.</h5>
+                        <form action="index.php" method="post">
+                            <div class="form-group">
+                                <a id="nastaveni_reset_DB_submit" class="btn btn-danger text-light" href="#" data-toggle="modal" data-target="#nastaveni_reset_DB_modal" title="Rozmysli si to!">
+                                    Resetovat databázi</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {{  block("body", "modal/resetDbModal.twig") }}
+
+{% endblock %}

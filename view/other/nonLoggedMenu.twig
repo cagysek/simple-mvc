@@ -26,13 +26,13 @@
             <div id="menu_collapsible_navbar" class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     <li id="menu_navod" class="nav-item">
-                        <a class="nav-link {% if tab == "navod" %}active{% endif %}" href="navod">
+                        <a class="nav-link {% if tab == constant('App\\Enum\\EMenuTab::HELP') %}active{% endif %}" href="navod">
                             <i class="menu-small fas fa-book-open"></i> Návod
                         </a>
                     </li>
 
                     <li id="menu_celkove" class="nav-item">
-                        <a class="nav-link {% if tab == "celkove" %}active{% endif %}" href="celkove">
+                        <a class="nav-link {% if tab == constant('App\\Enum\\EMenuTab::OVERALL') %}active{% endif %}" href="celkove">
                             Celkově <span id="menu_celkove_vsech_studentu" title="Počet všech zapsaných studentů" class="badge badge-primary badge-pill">{{ students_count }}</span>
                         </a>
                     </li>
