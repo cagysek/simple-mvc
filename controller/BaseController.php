@@ -92,6 +92,13 @@ class BaseController
         if (password_verify($password, $teacherPassword))
         {
             $this->sessionModel->loginUser(EUserRole::TEACHER);
+
+            $defaultStudent = $this->studentRepository->getStudentById(1);
+
+            if ($defaultStudent)
+            {
+                $this->sessionModel->setStudentSchoolNumber($defaultStudent[StudentRepository::COL_SCHOOL_NUMBER]);
+            }
         }
         else
         {

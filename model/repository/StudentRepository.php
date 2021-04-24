@@ -4,6 +4,10 @@
 namespace App\Model\Repository;
 
 
+use App\Enum\EStatusCode;
+use App\System\Request;
+use App\System\Response;
+
 class StudentRepository extends Repository
 {
     const TABLE_NAME = 'student';
@@ -79,5 +83,49 @@ class StudentRepository extends Repository
         }
 
         return $student[0];
+    }
+
+    public function getStudentById(int $id)
+    {
+        $student = $this->findBy([self::COL_ID => $id]);
+
+        if (empty($student))
+        {
+            return NULL;
+        }
+
+        return $student[0];
+    }
+
+    public function getStudentListData(int $taskCount) : array
+    {
+        $sql = "
+            SELECT s.id as id,s.lastname as lastname, s.firstname as firstname, s.`school_number` as schoolNumber, suc.success_attempts as successAttempts
+        ";
+
+        for ($i = 1 ; $i <= $taskCount ; $i++)
+        {
+            $sql .= ", task_" . $i . ".totalAttempts as totalAttempts" . $i . ", task_" . $i . ".is_ok as isOk" . $i;
+        }
+
+        $sql .= " 
+            FROM student s
+            LEFT JOIN (SELECT SUM(CASE WHEN `result` = 1 THEN 1 END) as success_attempts, student_id FROM task GROUP by `student_id`) AS suc ON suc.student_id = s.id
+        ";
+
+        for ($i = 1 ; $i <= $taskCount ; $i++)
+        {
+            $sql .= " LEFT JOIN (
+                        SELECT 
+                        COUNT(*) as totalAttempts, 
+                        SUM(CASE WHEN t.result = 1 THEN 1 END) AS is_ok, 
+                        t.student_id FROM task t WHERE `name` = " . $i . " GROUP BY student_id
+                    ) as task_" . $i . " ON task_" . $i . ".student_id = s.id";
+        }
+
+        $statement = $this->getConnection()->prepare($sql);
+        $statement->execute();
+
+        return $statement->fetchAll();
     }
 }

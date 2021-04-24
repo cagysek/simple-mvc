@@ -30,7 +30,6 @@ class SummaryController extends BaseController
 
     public function actionDefault() : Response
     {
-
         $data = [
             "tab" => EMenuTab::OVERALL,
         ];
