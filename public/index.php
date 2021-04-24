@@ -26,6 +26,10 @@
     $app->router->addRoute('/public/nastaveni', Router::GET, new Route(\App\controller\SettingsController::class, 'default'));
     $app->router->addRoute('/public/studenti', Router::GET, new Route(\App\controller\StudentController::class, 'list'));
     $app->router->addRoute('/public/select-student', Router::POST, new Route(\App\controller\StudentController::class, 'selectStudent'));
+    $app->router->addRoute('/public/reset-database', Router::POST, new Route(\App\controller\SettingsController::class, 'resetDatabase'));
+    $app->router->addRoute('/public/reset-student-password', Router::POST, new Route(\App\controller\SettingsController::class, 'resetStudentPassword'));
+    $app->router->addRoute('/public/update-tasks', Router::POST, new Route(\App\controller\SettingsController::class, 'updateTasks'));
+    $app->router->addRoute('/public/initialization', Router::POST, new Route(\App\controller\SettingsController::class, 'initialization'));
 
 
     $app->run();

@@ -65,6 +65,7 @@ class Repository
         if (!isset($this->pdo))
         {
             $this->pdo = DatabaseService::getInstance();
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             return $this->pdo;
         }

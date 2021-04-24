@@ -128,4 +128,19 @@ class StudentRepository extends Repository
 
         return $statement->fetchAll();
     }
+
+    public function getStudentsWithPassword() : array
+    {
+        return $this->findBy([self::COL_PASSWORD . ' IS NOT NULL' => ""]);
+    }
+
+    public function resetStudentPassword(string $schoolNumber) : void
+    {
+        $sql = "
+            UPDATE student SET password = NULL WHERE school_number = ?
+        ";
+
+        $statement = $this->getConnection()->prepare($sql);
+        $statement->execute([$schoolNumber]);
+    }
 }
