@@ -33,14 +33,17 @@
                 <div class="tab-content">
                     <div id="nastaveni_inicializace" class="container tab-pane"><br>
                         <h5 id="nastaveni_inicializace_nadpis">Určí, kolik bude celkem úloh, a načte soubor se seznamem všech zapsaných studentů.</h5>
-                        <div class="alert alert-warning">Seznam všech studentů již byl načten. Pokud jej chcete změnit, resetujte nejdříve DB.</div>
+
+                        {% if studentsCount %}
+                            <div class="alert alert-warning">Seznam všech studentů již byl načten. Pokud jej chcete změnit, resetujte nejdříve DB.</div>
+                        {% endif %}
                         <form action="/public/initialization" method="post" validate="">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Počet všech úloh</span>
                                 </div>
                                 <div class="input-group-prepend">
-                                    <input id="nastaveni_inicializace_pocet_uloh" type="number" name="inicPocetUloh" min="1" max="99" maxlength="2" size="2" value="10" required="" disabled="">
+                                    <input id="nastaveni_inicializace_pocet_uloh" type="number" name="inicPocetUloh" min="1" max="99" maxlength="2" size="2" value="10" required="" {% if studentsCount %}disabled=""{% endif %}>
                                 </div>
                             </div>
                             <div class="input-group mb-3">
@@ -48,16 +51,15 @@
                                     <span class="input-group-text">Jméno souboru se seznamem všech studentů</span>
                                 </div>
                                 <div class="input-group-prepend">
-                                    <select id="nastaveni_inicializace_soubory" class="form-control" name="seznamStudentu" disabled="">
-                                        <option>studenti-debug.csv</option>
-                                        <option>studenti.csv</option>
-                                        <option>ulohy-debug.csv</option>
-                                        <option>ulohy.csv</option>
+                                    <select id="nastaveni_inicializace_soubory" class="form-control" name="seznamStudentu" {% if studentsCount %}disabled=""{% endif %}>
+                                        {% for filename in inputFiles %}
+                                            <option>{{ filename }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input id="nastaveni_inicializace_submit" type="submit" class="btn btn-primary" name="OBSLUHA_nastaveni_inicializace" value="Inicializovat" disabled="">
+                                <input id="nastaveni_inicializace_submit" type="submit" class="btn btn-primary" name="OBSLUHA_nastaveni_inicializace" value="Inicializovat" {% if studentsCount %}disabled=""{% endif %}>
                             </div>
                         </form>
                     </div>

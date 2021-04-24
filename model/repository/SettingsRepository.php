@@ -14,6 +14,7 @@ class SettingsRepository extends Repository
     const COL_VALUE = 'value';
 
     const TEACHER_PASSWORD_KEY = 'teacher_password';
+    const TOTAL_TASK_COUNT = 'total_task_count';
 
     public function getTeacherPassword() : ?string
     {
@@ -24,8 +25,15 @@ class SettingsRepository extends Repository
 
     public function updateTeacherPassword(string $newPassword) : void
     {
-        $statement = $this->getConnection()->prepare('UPDATE settings SET `value` = ? WHERE `key` = "teacher_password"');
+        $statement = $this->getConnection()->prepare('UPDATE settings SET `value` = ? WHERE `key` = "' . self::TEACHER_PASSWORD_KEY . '"');
 
         $statement->execute([$newPassword]);
+    }
+
+    public function updateTotalTaskCount(int $totalTaskCount) : void
+    {
+        $statement = $this->getConnection()->prepare('UPDATE settings SET `value` = ? WHERE `key` = "' . self::TOTAL_TASK_COUNT . '"');
+
+        $statement->execute([$totalTaskCount]);
     }
 }

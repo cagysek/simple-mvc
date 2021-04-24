@@ -50,7 +50,7 @@ class StudentController extends BaseController
     public function actionSelectStudent(Request $request) : Response
     {
         $body = $request->getBody();
-        var_dump($body);
+
         $schoolNumber = $body['OBSLUHA_studenti_zobrazStudenta'];
 
         if ($this->sessionModel->getUserRole() != EUserRole::TEACHER)

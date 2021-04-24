@@ -73,5 +73,32 @@ class Repository
         return $this->pdo;
     }
 
+    protected function insertRows(array $rows, array $columns) : void
+    {
+        $sql = "
+            INSERT INTO " . $this->tableName . " (" . implode(',', $columns) . ") VALUES
+        ";
+
+        $params = [];
+        $inserts = [];
+        foreach ($rows as $row)
+        {
+            $placeholder = [];
+            foreach ($row as $column)
+            {
+                $params[] = $column;
+                $placeholder[] = "?";
+            }
+
+            $inserts[] = "(" . implode(',', $placeholder) . ")";
+        }
+
+        $sql .= implode(',', $inserts);
+
+        $statement = $this->getConnection()->prepare($sql);
+
+        $statement->execute($params);
+    }
+
 
 }

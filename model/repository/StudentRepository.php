@@ -16,7 +16,7 @@ class StudentRepository extends Repository
 
     const COL_ID = 'id';
     const COL_SCHOOL_NUMBER = 'school_number';
-    const COL_NAME = 'name';
+    const COL_FIRSTNAME = 'firstname';
     const COL_LASTNAME = 'lastname';
     const COL_PASSWORD = 'password';
 
@@ -142,5 +142,10 @@ class StudentRepository extends Repository
 
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute([$schoolNumber]);
+    }
+
+    public function insertStudents(array $data) : void
+    {
+        $this->insertRows($data, [self::COL_SCHOOL_NUMBER, self::COL_FIRSTNAME, self::COL_LASTNAME]);
     }
 }

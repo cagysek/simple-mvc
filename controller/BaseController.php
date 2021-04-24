@@ -37,7 +37,7 @@ class BaseController
         $twig = TwigService::getInstance();
 
         $commonParams = [
-            'students_count' => $this->studentRepository->getTotalStudentsCount(),
+            'studentsCount' => $this->studentRepository->getTotalStudentsCount(),
             'errorMsg' => $this->sessionModel->getErrorMessage(),
             'successMsg' => $this->sessionModel->getSuccessMessage(),
             'nonRegisteredStudents' => $this->studentRepository->getStudentsSchoolNumbersWithoutPassword(),
