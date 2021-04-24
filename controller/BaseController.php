@@ -38,7 +38,8 @@ class BaseController
 
         $commonParams = [
             'students_count' => $this->studentRepository->getTotalStudentsCount(),
-            'errorMsg' => $this->sessionModel->getError(),
+            'errorMsg' => $this->sessionModel->getErrorMessage(),
+            'successMsg' => $this->sessionModel->getSuccessMessage(),
             'nonRegisteredStudents' => $this->studentRepository->getStudentsSchoolNumbersWithoutPassword(),
             'registeredStudents' => $this->studentRepository->getStudentSchoolNumbersWithPassword(),
             'role' => $this->sessionModel->getUserRole(),
@@ -72,7 +73,7 @@ class BaseController
         }
         else
         {
-            $this->sessionModel->setError("Přihlášení se nezdařilo. Zadané heslo není správné.");
+            $this->sessionModel->setErrorMessage("Přihlášení se nezdařilo. Zadané heslo není správné.");
         }
 
         return new Response(EStatusCode::REDIRECT, "", "/public/navod");
@@ -102,7 +103,7 @@ class BaseController
         }
         else
         {
-            $this->sessionModel->setError("Přihlášení se nezdařilo. Zadané heslo není správné.");
+            $this->sessionModel->setErrorMessage("Přihlášení se nezdařilo. Zadané heslo není správné.");
         }
 
         return new Response(EStatusCode::REDIRECT, "", "/public/navod");
@@ -115,14 +116,14 @@ class BaseController
 
         if (empty($schoolNumber) || $schoolNumber == "--- Nevybráno ---")
         {
-            $this->sessionModel->setError("Nebylo zvoleno žádné osobní číslo.");
+            $this->sessionModel->setErrorMessage("Nebylo zvoleno žádné osobní číslo.");
 
             return new Response(EStatusCode::REDIRECT, "", "/public/navod");
         }
 
         if (empty($password))
         {
-            $this->sessionModel->setError("Nebylo zvoleno žádné heslo.");
+            $this->sessionModel->setErrorMessage("Nebylo zvoleno žádné heslo.");
 
             return new Response(EStatusCode::REDIRECT, "", "/public/navod");
         }
@@ -158,7 +159,7 @@ class BaseController
         }
         else
         {
-            $this->sessionModel->setError("Registrace se nezdařila. Byla již provedena dříve.");
+            $this->sessionModel->setErrorMessage("Registrace se nezdařila. Byla již provedena dříve.");
         }
 
         return new Response(EStatusCode::REDIRECT, "", "/public/navod");
@@ -173,6 +174,29 @@ class BaseController
 
     public function actionChangePassword(Request $request) : Response
     {
+        $params = $request->getBody();
 
+        if ($this->sessionModel->getUserRole() == EUserRole::TEACHER)
+        {
+            $newPassword = $params['zmenaHesloUci'];
+
+            $newPasswordHash = password_hash($newPassword, PASSWORD_BCRYPT);
+
+            $this->settingsRepository->updateTeacherPassword($newPasswordHash);
+        }
+        else
+        {
+            $newPassword = $params['zmenaHesloStu'];
+
+            $newPasswordHash = password_hash($newPassword, PASSWORD_BCRYPT);
+
+            $schoolNumber = $this->sessionModel->getStudentSchoolNumber();
+
+            $this->studentRepository->updateStudentPassword($schoolNumber, $newPasswordHash);
+        }
+
+        $this->sessionModel->setSuccessMessage("Změna hesla proběhla.");
+
+        return new Response(EStatusCode::REDIRECT, "", $request->getReferer());
     }
 }

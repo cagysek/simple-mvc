@@ -11,8 +11,9 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <h4 id="stu_modal_zmena_oscislo" class="text-info text-center font-weight-bold">
-                        A18B0214P</h4>
-                    <form action="index.php" class="" method="post" validate="">
+                        {{ selectedStudentNumber }}
+                    </h4>
+                    <form action="/public/change-password" class="" method="post" validate="">
                         <div class="form-group">
                             <input id="stu_modal_zmena_heslo" type="password" class="form-control" placeholder="Nové heslo" name="zmenaHesloStu" required="">
                             <div class="invalid-feedback">Prosím, zadejte nové heslo.</div>

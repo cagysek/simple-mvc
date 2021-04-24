@@ -98,4 +98,10 @@
     {{  block("body", "modal/errorModal.twig") }}
 {% endif %}
 
-</body></html>
+{% if successMsg %}
+    {{  block("body", "modal/successModal.twig") }}
+{% endif %}
+
+</body>
+
+</html>

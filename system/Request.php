@@ -21,6 +21,11 @@ class Request
         return $path;
     }
 
+    public function getReferer() : string
+    {
+        return $_SERVER['HTTP_REFERER'];
+    }
+
     public function isGet() : bool
     {
         return $this->getMethod() === 'get';

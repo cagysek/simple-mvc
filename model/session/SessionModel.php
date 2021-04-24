@@ -14,6 +14,8 @@ class SessionModel
 
     const STUDENT_SCHOOL_NUMBER = "student_school_number";
 
+    const SUCCESS = "success";
+
     public function loginUser(string $role) : void
     {
         $this->setUserRole($role);
@@ -47,12 +49,12 @@ class SessionModel
         $_SESSION[self::USER_ROLE] = $userRole;
     }
 
-    public function setError(?string $text) : void
+    public function setErrorMessage(?string $text) : void
     {
         $_SESSION[self::ERROR] = $text;
     }
 
-    public function getError() : ?string
+    public function getErrorMessage() : ?string
     {
         if (isset($_SESSION[self::ERROR]))
         {
@@ -73,19 +75,20 @@ class SessionModel
     }
 
 
-    public function setShowLoginError(bool $state) : void
+    public function setSuccessMessage(?string $state) : void
     {
-        $_SESSION[self::LOGIN_ERROR] = $state;
+        $_SESSION[self::SUCCESS] = $state;
     }
 
-    public function isSetShowLoginError() : bool
+    public function getSuccessMessage() : ?string
     {
-        return $_SESSION[self::LOGIN_ERROR] ?? false;
+        return $_SESSION[self::SUCCESS] ?? NULL;
     }
 
 
     public function clearTmpData()
     {
-        $this->setError(NULL);
+        $this->setErrorMessage(NULL);
+        $this->setSuccessMessage(NULL);
     }
 }
