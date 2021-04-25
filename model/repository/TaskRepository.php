@@ -119,4 +119,16 @@ class TaskRepository extends Repository
         return $statement->fetchAll();
     }
 
+    public function insertTasks(array $data) : void
+    {
+        $this->insertRows($data, [self::COL_NAME, self::COL_STUDENT_ID, self::COL_SUBMITTED, self::COL_RESULT]);
+    }
+
+    public function getTotalTaskCount() : int
+    {
+        $tasks = $this->findAll();
+
+        return count($tasks);
+    }
+
 }

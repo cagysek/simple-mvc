@@ -148,4 +148,16 @@ class StudentRepository extends Repository
     {
         $this->insertRows($data, [self::COL_SCHOOL_NUMBER, self::COL_FIRSTNAME, self::COL_LASTNAME]);
     }
+
+    public function getStudentSchoolNumberIdMap() : array
+    {
+        $sql = "
+            SELECT school_number, id FROM student;
+        ";
+
+        $statement = $this->getConnection()->prepare($sql);
+        $statement->execute();
+
+        return $statement->fetchAll(\PDO::FETCH_KEY_PAIR);
+    }
 }

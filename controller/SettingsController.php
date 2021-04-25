@@ -9,6 +9,7 @@ use App\Enum\EStatusCode;
 use App\Enum\EUserRole;
 use App\model\facade\SettingsFacade;
 use App\Model\Repository\StudentRepository;
+use App\Model\Repository\TaskRepository;
 use App\System\Request;
 use App\System\Response;
 
@@ -18,6 +19,7 @@ class SettingsController extends BaseController
 
     private StudentRepository $studentRepository;
     private SettingsFacade $settingsFacade;
+    private TaskRepository $taskRepository;
 
     /**
      * SettingsController constructor.
@@ -31,6 +33,8 @@ class SettingsController extends BaseController
         $this->studentRepository = new StudentRepository();
 
         $this->settingsFacade = new SettingsFacade();
+
+        $this->taskRepository = new TaskRepository();
     }
 
     private function checkPrivileges()
@@ -72,8 +76,24 @@ class SettingsController extends BaseController
         return new Response(EStatusCode::REDIRECT, "", "/public/nastaveni");
     }
 
-    public function actionUpdateTasks() : Response
+    public function actionUpdateTasks(Request $request) : Response
     {
+        $body = $request->getBody();
+
+        $file = $body['seznamUloh'];
+
+        $result = $this->settingsFacade->loadTasks($file);
+
+        if ($result)
+        {
+            $this->sessionModel->setSuccessMessage("Soubor byl načten. <br> Počet záznamů, které byly uloženy do DB: " . $this->taskRepository->getTotalTaskCount());
+        }
+        else
+        {
+            $this->sessionModel->setErrorMessage("Soubor neobsahuje data s úlohami.");
+        }
+
+        return new Response(EStatusCode::REDIRECT, "", "/public/nastaveni");
 
     }
 
@@ -92,6 +112,10 @@ class SettingsController extends BaseController
         if ($result)
         {
             $this->sessionModel->setSuccessMessage("Soubor byl načten. <br> Počet záznamů, které byly uloženy do DB: " . $this->studentRepository->getTotalStudentsCount());
+        }
+        else
+        {
+            $this->sessionModel->setErrorMessage("Soubor neobsahuje data se studenty.");
         }
 
         return new Response(EStatusCode::REDIRECT, "", "/public/nastaveni");

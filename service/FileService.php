@@ -39,7 +39,7 @@ class FileService
 
         while ($row = fgetcsv($handler))
         {
-            $data[] = explode(';', $row[0]);
+            $data[] = explode(';', str_replace("\"", '', $row[0]));
         }
 
         fclose($handler);
