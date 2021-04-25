@@ -160,4 +160,21 @@ class StudentRepository extends Repository
 
         return $statement->fetchAll(\PDO::FETCH_KEY_PAIR);
     }
+
+    public function createTable() : void
+    {
+        $sql = "
+            CREATE TABLE `student` (
+                `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                `school_number` varchar(255) DEFAULT NULL,
+                `firstname` varchar(255) DEFAULT NULL,
+                `lastname` varchar(255) DEFAULT NULL,
+                `password` varchar(255) DEFAULT NULL,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+        ";
+
+        $statement = $this->getConnection()->prepare($sql);
+        $statement->execute();
+    }
 }

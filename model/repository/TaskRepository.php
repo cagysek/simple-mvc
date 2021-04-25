@@ -131,4 +131,23 @@ class TaskRepository extends Repository
         return count($tasks);
     }
 
+    public function createTable() : void
+    {
+        $sql = "
+            CREATE TABLE `task` (
+              `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+              `name` varchar(11) DEFAULT NULL,
+              `student_id` int(10) unsigned DEFAULT NULL,
+              `submitted` datetime DEFAULT NULL,
+              `result` tinyint(1) DEFAULT NULL,
+              PRIMARY KEY (`id`),
+              KEY `ibfk_1_student` (`student_id`),
+              CONSTRAINT `ibfk_1_student` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+        ";
+
+        $statement = $this->getConnection()->prepare($sql);
+        $statement->execute();
+    }
+
 }

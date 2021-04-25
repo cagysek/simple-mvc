@@ -36,4 +36,28 @@ class SettingsRepository extends Repository
 
         $statement->execute([$totalTaskCount]);
     }
+
+    public function createTable() : void
+    {
+        $sql = "
+            CREATE TABLE `settings` (
+                `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                `key` varchar(255) DEFAULT NULL,
+                `value` varchar(255) DEFAULT NULL,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+        ";
+
+        $statement = $this->getConnection()->prepare($sql);
+        $statement->execute();
+
+        // vložení defaultních hodnot
+        $sql = "
+            INSERT INTO `settings` (`key`) VALUES ('teacher_password');
+            INSERT INTO `settings` (`key`) VALUES ('total_task_count');
+        ";
+
+        $statement = $this->getConnection()->prepare($sql);
+        $statement->execute();
+    }
 }

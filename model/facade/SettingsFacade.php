@@ -137,4 +137,23 @@ class SettingsFacade
     {
         $this->settingsRepository->updateTotalTaskCount($totalTaskCount);
     }
+
+    public function initDatabase() : void
+    {
+        $this->taskRepository->dropTable();
+        $this->settingsRepository->dropTable();
+        $this->studentRepository->dropTable();
+
+        $this->studentRepository->createTable();
+        $this->settingsRepository->createTable();
+        $this->taskRepository->createTable();
+    }
+
+    public function checkDatabase() : void
+    {
+        if (!$this->settingsRepository->isTableExists())
+        {
+            $this->initDatabase();
+        }
+    }
 }

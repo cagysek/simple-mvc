@@ -5,9 +5,7 @@
         <div class="container">
         <span id="menu_role" class="navbar-brand dropdown">
             <span id="nep_menu" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                <i class="role fas fa-user-secret"></i>
-                Nepřihlášený
-            </span>
+                <i class="role fas fa-user-secret"></i> Nepřihlášený</span>
             <div class="dropdown-menu">
                 <a id="nep_menu_login" class="dropdown-item" href="#" data-toggle="modal" data-target="#nep_modal_login">
                     Login
@@ -33,7 +31,10 @@
 
                     <li id="menu_celkove" class="nav-item">
                         <a class="nav-link {% if tab == constant('App\\Enum\\EMenuTab::OVERALL') %}active{% endif %}" href="celkove">
-                            Celkově <span id="menu_celkove_vsech_studentu" title="Počet všech zapsaných studentů" class="badge badge-primary badge-pill">{{ studentsCount }}</span>
+                            Celkově
+                            {% if studentCount > 1 %}
+                                <span id="menu_celkove_vsech_studentu" title="Počet všech zapsaných studentů" class="badge badge-primary badge-pill">{{ studentsCount }}</span>
+                            {% endif %}
                         </a>
                     </li>
                 </ul>

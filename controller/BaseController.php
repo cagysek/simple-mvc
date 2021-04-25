@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Enum\EStatusCode;
 use App\Enum\EUserRole;
+use App\model\facade\SettingsFacade;
 use App\Model\Repository\SettingsRepository;
 use App\Model\Repository\StudentRepository;
 use App\Model\Session\SessionModel;
@@ -22,6 +23,8 @@ class BaseController
 
     private SettingsRepository $settingsRepository;
 
+    private SettingsFacade $settingsFacade;
+
     /**
      * BaseController constructor.
      */
@@ -30,6 +33,10 @@ class BaseController
         $this->studentRepository = new StudentRepository();
         $this->sessionModel = new SessionModel();
         $this->settingsRepository = new SettingsRepository();
+        $this->settingsFacade = new SettingsFacade();
+
+        $this->settingsFacade->checkDatabase();
+
     }
 
     public function render(string $file, array $params = []) : Response

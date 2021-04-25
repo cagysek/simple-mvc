@@ -100,5 +100,25 @@ class Repository
         $statement->execute($params);
     }
 
+    public function dropTable() : void
+    {
+        $statement = $this->getConnection()->prepare("DROP TABLE IF EXISTS " . $this->tableName);
+        $statement->execute();
+    }
+
+    public function isTableExists() : bool
+    {
+        try
+        {
+            $result = $this->getConnection()->query("SELECT 1 FROM " . $this->tableName);
+        }
+        catch (\Throwable $e)
+        {
+            return FALSE;
+        }
+
+        return $result !== FALSE;
+    }
+
 
 }

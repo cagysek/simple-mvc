@@ -60,7 +60,10 @@ class SettingsController extends BaseController
 
     public function actionResetDatabase() : Response
     {
+        $this->settingsFacade->initDatabase();
+        $this->sessionModel->logOutUser();
 
+        return new Response(EStatusCode::REDIRECT, "", "/public/navod");
     }
 
     public function actionResetStudentPassword(Request $request) : Response
