@@ -119,6 +119,22 @@ class TaskRepository extends Repository
         return $statement->fetchAll();
     }
 
+    public function getAttemptsTimes() : array
+    {
+        $sql = "
+            SELECT 
+			EXTRACT(HOUR FROM submitted) as `hour`,
+            count(*) as `count`
+            FROM task 
+            GROUP by EXTRACT(HOUR FROM submitted)
+        ";
+
+        $statement = $this->getConnection()->prepare($sql);
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
+
     public function insertTasks(array $data) : void
     {
         $this->insertRows($data, [self::COL_NAME, self::COL_STUDENT_ID, self::COL_SUBMITTED, self::COL_RESULT]);
@@ -149,5 +165,71 @@ class TaskRepository extends Repository
         $statement = $this->getConnection()->prepare($sql);
         $statement->execute();
     }
+
+    public function getOverviewData() : array
+    {
+        $sql = "
+        SELECT 
+            t.name as name, 
+            COUNT(*) as total,
+            SUM(CASE WHEN t.result = 1 THEN 1 END) AS is_ok_attempts,
+            SUM(CASE WHEN t.result = 0 THEN 1 END) AS is_not_ok_attempts,
+            (SUM(CASE WHEN t.result = 1 THEN 1 END) / COUNT(*)) as succ_rate,
+            students_succ_try.`count` as students_success_count,
+            students_try.`count` as student_try_count,
+            (COUNT(*) / students_try.`count`) as avg_per_student
+        FROM task t
+        LEFT JOIN (
+            SELECT COUNT(DISTINCT s.id) as `count`, t2.name as task_name FROM student s LEFT JOIN task t2 on s.id = t2.student_id  AND t2.result = 1 GROUP BY `name`
+            ) as students_succ_try ON students_succ_try.task_name = t.name
+        LEFT JOIN (
+            SELECT COUNT(DISTINCT s.id) as `count`, t2.name as task_name FROM student s LEFT JOIN task t2 on s.id = t2.student_id  GROUP BY `name`
+            ) as students_try ON students_try.task_name = t.name
+        
+        GROUP BY t.name
+        ";
+
+        $statement = $this->getConnection()->query($sql);
+
+        return $statement->fetchAll();
+    }
+
+    public function getOverviewMaxStudentAttemptsPerTask() : array
+    {
+        $sql = "
+            SELECT t.name, max_attempts.count
+            FROM task t 
+            LEFT JOIN (SELECT COUNT(t.id) as `count`, t.`name` as name FROM task t group by `name`, student_id ORDER by COUNT(t.id) ASC ) as max_attempts on max_attempts.name = t.name
+            GROUP BY name;
+        ";
+
+        $statement = $this->getConnection()->query($sql);
+
+        return $statement->fetchAll(\PDO::FETCH_KEY_PAIR);
+    }
+
+
+    public function getOverviewDataTotal() : array
+    {
+        $sql = "
+        SELECT 
+            t.name as name, 
+            COUNT(*) as total,
+            SUM(CASE WHEN t.result = 1 THEN 1 END) AS is_ok_attempts,
+            SUM(CASE WHEN t.result = 0 THEN 1 END) AS is_not_ok_attempts,
+            (SUM(CASE WHEN t.result = 1 THEN 1 END) / COUNT(*)) as succ_rate,
+            students_try.`count` as student_try_count
+        FROM task t
+        LEFT JOIN (
+            SELECT COUNT(DISTINCT s.id) as `count`, t2.name as task_name FROM student s LEFT JOIN task t2 on s.id = t2.student_id  GROUP BY `name`
+            ) as students_try ON students_try.task_name = t.name
+        ";
+
+        $statement = $this->getConnection()->query($sql);
+
+        return $statement->fetch();
+    }
+
+
 
 }

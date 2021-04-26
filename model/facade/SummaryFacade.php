@@ -5,6 +5,7 @@ namespace App\Model\Facade;
 
 
 use App\Model\Repository\SettingsRepository;
+use App\Model\Repository\StudentRepository;
 use App\Model\Repository\TaskRepository;
 
 class SummaryFacade
@@ -13,10 +14,13 @@ class SummaryFacade
 
     private TaskRepository $taskRepository;
 
+    private StudentRepository $studentRepository;
+
     public function __construct()
     {
         $this->settingsRepository = new SettingsRepository();
         $this->taskRepository = new TaskRepository();
+        $this->studentRepository = new StudentRepository();
     }
 
 
@@ -60,6 +64,11 @@ class SummaryFacade
 
 
         return $data;
+    }
+
+    public function getOverviewTableData() : array
+    {
+
     }
 
     public function getProgressBarData(int $studentId) : array
@@ -107,6 +116,85 @@ class SummaryFacade
     }
 
 
+    public function getOverviewData() : array
+    {
+        $totalTaskNameCount = $this->taskRepository->getMaxTaskNumber();
+
+        $overviewTableData = $this->taskRepository->getOverviewData();
+
+        $maxStudentAttemptsPerTask = $this->taskRepository->getOverviewMaxStudentAttemptsPerTask();
+
+        $data = [];
+
+        $totalStudentsSurrenderCount = 0;
+        $maxStudentAttemptsTotal = 0;
+        $averageAttemptsPerStudentTotal = 0;
+
+        foreach ($overviewTableData as $task)
+        {
+            $studentSurrender = ($task['student_try_count'] ?? 0) - ($task['students_success_count'] ?? 0);
+
+            $totalStudentsSurrenderCount += $studentSurrender;
+
+            $maxStudentsAttempt = $maxStudentAttemptsPerTask[$task['name']];
+            if ($maxStudentsAttempt > $maxStudentAttemptsTotal)
+            {
+                $maxStudentAttemptsTotal = $maxStudentsAttempt;
+            }
+
+            $averageAttemptsPerStudentTotal += $task['avg_per_student'];
+
+
+            $data["task"][$task['name']] = [
+                'studentsTryCount' => $task['student_try_count'],
+                'studentsSuccessCount' => $task['students_success_count'],
+                'studentsSurrenderCount' => $studentSurrender > 0 ? $studentSurrender : '-',
+                'total' => $task['total'],
+                'isNotOkAttempts' => $task['is_not_ok_attempts'] ?? '-',
+                'isOkAttempts' => $task['is_ok_attempts'],
+                'successRate' => round($task['succ_rate'] * 100),
+                'averageAttemptsPerStudent' => round($task['avg_per_student']),
+                'maxStudentAttempts' => $maxStudentsAttempt,
+            ];
+        }
+
+
+        $overviewTableTotalData = $this->taskRepository->getOverviewDataTotal();
+
+        $data["total"] = [
+            'studentsTryCount' => $overviewTableTotalData['student_try_count'],
+            'studentsSurrenderCount' => $totalStudentsSurrenderCount,
+            'total' => $overviewTableTotalData['total'],
+            'isNotOkAttempts' => $overviewTableTotalData['is_not_ok_attempts'],
+            'isOkAttempts' => $overviewTableTotalData['is_ok_attempts'],
+            'successRate' => round($overviewTableTotalData['succ_rate'] * 100),
+            'maxStudentAttempts' => $maxStudentAttemptsTotal,
+            'averageAttemptsPerStudent' => round($averageAttemptsPerStudentTotal / $totalTaskNameCount),
+        ];
+
+
+
+        return $data;
+    }
+
+    public function getGraphDataForOverview() : array
+    {
+        $data = [];
+
+        for ($i = 0 ; $i < 24 ; $i++)
+        {
+            $data[$i] = 0;
+        }
+
+        $attemptsTimes = $this->taskRepository->getAttemptsTimes();
+
+        foreach ($attemptsTimes as $time)
+        {
+            $data[$time['hour']] = $time['count'];
+        }
+
+        return $data;
+    }
 
 
 

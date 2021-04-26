@@ -30,8 +30,17 @@ class SummaryController extends BaseController
 
     public function actionDefault() : Response
     {
+        $tableData = $this->summaryFacade->getOverviewData();
+
+        $totalStudentCount = $this->studentRepository->getTotalStudentsCount();
+
         $data = [
             "tab" => EMenuTab::OVERALL,
+            "taskCount" => $this->taskRepository->getMaxTaskNumber(),
+            "taskData" => $tableData['task'],
+            "totalData" => $tableData['total'],
+            "totalStudentCount" => $totalStudentCount,
+            "graphData" => json_encode($this->summaryFacade->getGraphDataForOverview(), JSON_FORCE_OBJECT),
         ];
 
         return parent::render("template/summary/default.twig", $data);
@@ -46,7 +55,6 @@ class SummaryController extends BaseController
         $studentId = $student[StudentRepository::COL_ID];
 
         $studentTableData = $this->summaryFacade->getStudentTableData($studentId);
-
 
         $data = [
             "tab" => "osobniCislo",

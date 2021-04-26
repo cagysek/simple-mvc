@@ -77,29 +77,45 @@ class SettingsFacade
         // posun o jednu pozici (odstraní header row)
         array_shift($data);
 
-        $this->studentRepository->insertStudents($data);
+        $preparedData = $this->prepareStudentData($data);
+
+        $this->studentRepository->insertStudents($preparedData);
 
         return true;
     }
 
     private function isStudentsFile(array $headerRow) : bool
     {
-        $headers = ["osCislo", "jmeno", "prijmeni"];
 
-        return $headers === $headerRow;
+        $headersMushHave = ["osCislo", "jmeno", "prijmeni"];
+
+        return count(array_diff($headersMushHave, $headerRow)) == 0;
     }
 
     private function isTaskFile(array $headerRow) : bool
     {
-       $headers = [
-           "Predmet","Nazev tematu","Osobni cislo","Jmeno",
-           "Nazev souboru","Pokus","Datum odevzdani",
-           "Autom. validace-Vysledek","Autom. validace-URL",
-           "Hodnoceni","Hodnoceni-pocet bodu","Hodnoceni-datum",
-           "Hodnoceni-vyucujici","Hodnoceni-poznamka"
+       $headersMushHave = [
+           "Nazev tematu","Osobni cislo","Datum odevzdani",
+           "Autom. validace-Vysledek"
        ];
 
-       return $headerRow === $headers;
+        return count(array_diff($headersMushHave, $headerRow)) == 0;
+    }
+
+    private function prepareStudentData(array $originalData) : array
+    {
+        $data = [];
+
+        foreach ($originalData as $row)
+        {
+            $data[] = [
+                StudentRepository::COL_SCHOOL_NUMBER => $row[0],
+                StudentRepository::COL_FIRSTNAME => $row[1],
+                StudentRepository::COL_LASTNAME => $row[2],
+            ];
+        }
+
+        return $data;
     }
 
     private function prepareTaskData(array $originalData) : array

@@ -10,7 +10,9 @@
 
     <script>
         $(document).ready( function () {
-            $('#studenti_tab').DataTable();
+            $('#studenti_tab').DataTable( {
+                "pageLength": 100
+            });
         } );
     </script>
 
@@ -18,72 +20,79 @@
 
 {% block content %}
 
-    <article class="container">
-        <div class="row">
-            <div class="col-12 text-primary text-center">
-                <h2 id="studenti_nadpis">Přehled všech studentů</h2>
-            </div>
-            <div class="col-12 table-responsive">
-                <table id="studenti_tab" class="table table-sm table-bordered table-striped table-hover">
-                    <thead class="thead-dark text-center">
-                    <tr id="studenti_tab_tr_0">
-                        <th rowspan="2" class="align-middle">#</th>
-                        <th rowspan="2" class="align-middle">
-                            Příjmení
-                        </th>
-                        <th rowspan="2" class="align-middle">
-                            Jméno
-                        </th>
-                        <th rowspan="2" class="align-middle">
-                            ID
-                        </th>
-                        <th rowspan="2" class="align-middle">
-                            <abbr title="Celkem úspěšně odevzdaných úloh">
-                                # OK
-                            </abbr>
-                        </th>
-                        <th colspan="{{ taskCount }}">OKS</th></tr>
-                    <tr>
-                        {% for i in 1..taskCount %}
-                            <th class="align-middle">{{ "%02d"|format(i) }}</th>
-                        {% endfor %}
-                    </tr>
-                    </thead>
-                    <tbody class="text-center">
-                        {% for row in data %}
-                            <tr id="studenti_tab_tr_{{ loop.index }}" class="position-relative">
-                                <td class="align-middle">{{ row['id'] }}.</td>
-                                <td class="align-middle text-left">{{ row['lastname'] }}</td>
-                                <td class="align-middle text-left">{{ row['firstname'] }}</td>
-                                <td class="align-middle">
-                                    {# kvůli řazení, hodnotu ve form to neumí řadit #}
-                                    <span class="hide">
-                                        {{ row['schoolNumber'] }}
-                                    </span>
 
-                                    <form action="/public/select-student" method="post">
-                                        <input id="studenti_tab_td_odkaz_{{ row['schoolNumber'] }}" type="submit" class="btn btn-link" name="OBSLUHA_studenti_zobrazStudenta" value="{{ row['schoolNumber'] }}">
-                                    </form>
-                                </td>
-                                <td id="studenti_tab_td_suma_{{ row['schoolNumber'] }}" class="align-middle text-success">{{ row['successAttempts'] }}</td>
+        <article class="container">
+            <div class="row">
+                <div class="col-12 text-primary text-center">
+                    <h2 id="studenti_nadpis">Přehled všech studentů</h2>
+                </div>
+                {% if studentCount == 0 %}
+                    <div class="col-12 text-primary text-center">
+                        <span id="celkove_zadna_data" class="text-danger text-center font-weight-bold">Dosud nejsou k dispozici žádná data</span><p></p>
+                    </div>
+                {% else %}
+                    <div class="col-12 table-responsive">
+                        <table id="studenti_tab" class="table table-sm table-bordered table-striped table-hover">
+                            <thead class="thead-dark text-center">
+                            <tr id="studenti_tab_tr_0">
+                                <th rowspan="2" class="align-middle">#</th>
+                                <th rowspan="2" class="align-middle">
+                                    Příjmení
+                                </th>
+                                <th rowspan="2" class="align-middle">
+                                    Jméno
+                                </th>
+                                <th rowspan="2" class="align-middle">
+                                    ID
+                                </th>
+                                <th rowspan="2" class="align-middle">
+                                    <abbr title="Celkem úspěšně odevzdaných úloh">
+                                        # OK
+                                    </abbr>
+                                </th>
+                                <th colspan="{{ taskCount }}">OKS</th></tr>
+                            <tr>
                                 {% for i in 1..taskCount %}
-
-                                    <td class="align-middle">
-                                        {# nastavenení pozadí #}
-                                        {% set css = row['isOk' ~ i] is not null ? ("background-color: #8fd19e") : row['totalAttempts' ~ i] is not null ? "background-color: #ed969e" : "" %}
-
-                                        <span style="{{ css }}" class="text-dark px-2 py-0">
-                                            {{ row['totalAttempts' ~ i] ?? "-" }}
-                                        </span>
-                                    </td>
+                                    <th class="align-middle">{{ "%02d"|format(i) }}</th>
                                 {% endfor %}
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                            </thead>
+                            <tbody class="text-center">
+                                {% for row in data %}
+                                    <tr id="studenti_tab_tr_{{ loop.index }}" class="position-relative">
+                                        <td class="align-middle">{{ row['id'] }}.</td>
+                                        <td class="align-middle text-left">{{ row['lastname'] }}</td>
+                                        <td class="align-middle text-left">{{ row['firstname'] }}</td>
+                                        <td class="align-middle">
+                                            {# kvůli řazení, hodnotu ve form to neumí řadit #}
+                                            <span class="hide">
+                                                {{ row['schoolNumber'] }}
+                                            </span>
+
+                                            <form action="/public/select-student" method="post">
+                                                <input id="studenti_tab_td_odkaz_{{ row['schoolNumber'] }}" type="submit" class="btn btn-link" name="OBSLUHA_studenti_zobrazStudenta" value="{{ row['schoolNumber'] }}">
+                                            </form>
+                                        </td>
+                                        <td id="studenti_tab_td_suma_{{ row['schoolNumber'] }}" class="align-middle text-success">{{ row['successAttempts'] }}</td>
+                                        {% for i in 1..taskCount %}
+
+                                            <td class="align-middle">
+                                                {# nastavenení pozadí #}
+                                                {% set css = row['isOk' ~ i] is not null ? ("background-color: #8fd19e") : row['totalAttempts' ~ i] is not null ? "background-color: #ed969e" : "" %}
+
+                                                <span style="{{ css }}" class="text-dark px-2 py-0">
+                                                    {{ row['totalAttempts' ~ i] ?? "-" }}
+                                                </span>
+                                            </td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
             </div>
-        </div>
-    </article>
+        </article>
 
 
 {% endblock %}

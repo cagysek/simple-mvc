@@ -65,33 +65,38 @@
                     </div>
                     <div id="nastaveni_aktualizace" class="container tab-pane fade active show"><br>
                         <h5 id="nastaveni_aktualizace_nadpis">Načte ze souboru seznam odevzdaných úloh exportovaný z validátoru.</h5>
+                        {% if studentsCount == 0 %}
+                            <div class="alert alert-warning">Dosud nebyl načten seznam všech studentů. Proveďte to v Inicializaci.</div>
+                        {% endif %}
                         <form action="/public/update-tasks" method="post" validate="">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Jméno souboru odevzdaných úloh</span>
                                 </div>
                                 <div class="input-group-prepend">
-                                    <select id="nastaveni_aktualizace_soubory" class="form-control" name="seznamUloh">
-                                        <option>studenti-debug.csv</option>
-                                        <option>studenti.csv</option>
-                                        <option>ulohy-debug.csv</option>
-                                        <option>ulohy.csv</option>
+                                    <select id="nastaveni_aktualizace_soubory" class="form-control" name="seznamUloh" {% if studentsCount == 0 %}disabled=""{% endif %}>
+                                        {% for filename in inputFiles %}
+                                            <option>{{ filename }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input id="nastaveni_aktualizace_submit" type="submit" class="btn btn-primary" name="OBSLUHA_nastaveni_aktualizace" value="Načíst soubor">
+                                <input id="nastaveni_aktualizace_submit" type="submit" class="btn btn-primary" name="OBSLUHA_nastaveni_aktualizace" value="Načíst soubor" {% if studentsCount == 0 %}disabled=""{% endif %}>
                             </div>
                         </form>
                     </div>
                     <div id="nastaveni_reset_heslo" class="container tab-pane fade"><br>
                         <h5 id="nastaveni_reset_heslo_nadpis">Zvolenému studentovi se vymaže heslo, čímž se umožní jeho opětovná registrace.</h5>
+                        {% if studentsCount == 0 %}
+                            <div class="alert alert-warning">Dosud nebyl načten seznam všech studentů.</div>
+                        {% endif %}
                         <form action="/public/reset-student-password" class="" method="post" validate="">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Osobní číslo</span>
                                 </div>
-                                <select id="nastaveni_reset_heslo_oscisla" class="form-control" name="resetOsCislo">
+                                <select id="nastaveni_reset_heslo_oscisla" class="form-control" name="resetOsCislo" {% if studentsCount == 0 %}disabled=""{% endif %}>
                                     <option id="oscislo_nevybrano">--- Nevybráno ---</option>
                                     {% for student in studentsWithPassword %}
                                         <option id="login_{{ student['school_number'] }}">{{ student['school_number'] }}</option>
@@ -99,7 +104,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input id="nastaveni_reset_heslo_submit" type="submit" class="btn btn-primary" name="OBSLUHA_nastaveni_resetHesla" value="Resetovat heslo">
+                                <input id="nastaveni_reset_heslo_submit" type="submit" class="btn btn-primary" name="OBSLUHA_nastaveni_resetHesla" value="Resetovat heslo" {% if studentsCount == 0 %}disabled=""{% endif %}>
                             </div>
                         </form>
                     </div>

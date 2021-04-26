@@ -70,6 +70,14 @@ class BaseController
             return new Response(EStatusCode::REDIRECT, "", "/public/navod");
         }
 
+        if ($studentSchoolNumber == "--- Nevybráno ---")
+        {
+            $this->sessionModel->setErrorMessage("Nebylo zvoleno žádné osobní číslo.");
+
+            return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+
+        }
+
         $studentPassword = $this->studentRepository->getStudentPassword($studentSchoolNumber);
 
         if (password_verify($password, $studentPassword))

@@ -41,6 +41,7 @@ class StudentController extends BaseController
             "tab" => EMenuTab::STUDENTS,
             "data" => $studentsListData,
             "taskCount" => $currentTaskCount,
+            "studentCount" => $this->studentRepository->getTotalStudentsCount(),
         ];
 
         return parent::render("template/student/list.twig", $data);
