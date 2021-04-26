@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Obsahuje všechno routování na základě url hledá vhodnou akci
+ */
 
 namespace App\System;
 
@@ -33,6 +36,8 @@ class Router
 
 
     /**
+     * Přidá routu do mapy
+     *
      * @param string $url
      * @param string $type
      * @param Route  $route
@@ -42,6 +47,12 @@ class Router
         $this->routeMap[$type][$url] = $route;
     }
 
+    /**
+     * Na základě url zjisti route a zavolá příslušnou akci
+     *
+     * @return Response
+     * @throws \Exception
+     */
     public function resolve() : Response
     {
         $method = $this->request->getMethod();

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Enum obsahující názvy položek v menu
+ */
+
 
 namespace App\enum;
 

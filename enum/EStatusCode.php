@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Enum pro HTTP kody
+ */
 
 namespace App\Enum;
 

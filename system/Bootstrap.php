@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Třída představující hlavní tělo programu
+ *
+ */
+
 namespace App\System;
 
 use App\Enum\EStatusCode;
@@ -23,13 +28,17 @@ class Bootstrap
         $this->session = new Session();
     }
 
-
+    /**
+     * Zpracování požadavku
+     */
     public function run() : void
     {
         try
         {
+            // převod requestu na správnou akci
             $response = $this->router->resolve();
 
+            // na základě response provedení akce
             if ($response->getStatusCode() == EStatusCode::SUCCESS)
             {
                 $response->send();
@@ -38,15 +47,22 @@ class Bootstrap
             {
                 header("Location: " . $response->getRedirect());
             }
+            else if ($response->getStatusCode() == EStatusCode::INTERNAL_ERROR)
+            {
+                echo "ERROR:";
+                echo "<br>";
+                echo $response->getBody();
+            }
             else
             {
-                echo "error";
+                echo "Hups";
             }
 
         }
         catch (\Throwable $e)
         {
-            echo "error: ";
+            echo "ERROR: ";
+            echo "<br>";
             echo $e->getMessage();
         }
     }

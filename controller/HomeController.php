@@ -20,7 +20,11 @@ class HomeController extends BaseController
         parent::__construct();
     }
 
-    public function actionDefault($a) : Response
+    /**
+     * Akce pro homepage
+     * @return Response
+     */
+    public function actionDefault() : Response
     {
 
         $data = [
@@ -29,10 +33,4 @@ class HomeController extends BaseController
 
         return parent::render("template/home/default.twig", $data);
     }
-
-    public function actionDetail()
-    {
-        echo "detail";
-    }
-
 }

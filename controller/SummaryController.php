@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\enum\EMenuTab;
+use App\Enum\EStatusCode;
 use App\Model\Facade\SummaryFacade;
 use App\Model\Repository\StudentRepository;
 use App\Model\Repository\TaskRepository;
@@ -28,6 +29,11 @@ class SummaryController extends BaseController
         parent::__construct();
     }
 
+    /**
+     * Akce pro zobrazení celkového přehledu
+     *
+     * @return Response
+     */
     public function actionDefault() : Response
     {
         $tableData = $this->summaryFacade->getOverviewData();
@@ -46,6 +52,11 @@ class SummaryController extends BaseController
         return parent::render("template/summary/default.twig", $data);
     }
 
+    /**
+     * Akce pro zobrazení statistik studenta
+     *
+     * @return Response
+     */
     public function actionStudentInfo() : Response
     {
 
@@ -57,7 +68,7 @@ class SummaryController extends BaseController
         $studentTableData = $this->summaryFacade->getStudentTableData($studentId);
 
         $data = [
-            "tab" => "osobniCislo",
+            "tab" => EMenuTab::STUDENT,
             "studentInfo" => $student,
             "studentData" => $studentTableData['student'],
             "studentTotalData" => $studentTableData['total'],

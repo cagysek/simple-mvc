@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Fasáda pro příprava dat pro statistiky
+ */
 
 namespace App\Model\Facade;
 
@@ -23,7 +26,12 @@ class SummaryFacade
         $this->studentRepository = new StudentRepository();
     }
 
-
+    /**
+     * Vytvoření datasetu pro tabulku s daty studenta
+     *
+     * @param int $studentId
+     * @return array
+     */
     public function getStudentTableData(int $studentId) : array
     {
         $taskRows = $this->taskRepository->getStudentTasksSummary($studentId);
@@ -66,11 +74,12 @@ class SummaryFacade
         return $data;
     }
 
-    public function getOverviewTableData() : array
-    {
-
-    }
-
+    /**
+     * Příprava dat pro progress bar na detailu statistik studenta
+     *
+     * @param int $studentId
+     * @return int[]
+     */
     public function getProgressBarData(int $studentId) : array
     {
         $taskData = $this->taskRepository->getProgressBarData($studentId);
@@ -96,6 +105,12 @@ class SummaryFacade
 
     }
 
+    /**
+     * Příprava dat pro graf hodin ve kterých student odevzdává
+     *
+     * @param int $studentId
+     * @return array
+     */
     public function getGraphDataForStudent(int $studentId) : array
     {
         $data = [];
@@ -115,7 +130,11 @@ class SummaryFacade
         return $data;
     }
 
-
+    /**
+     * Příprava datasetu pro celkový přehled
+     *
+     * @return array
+     */
     public function getOverviewData() : array
     {
         $totalTaskNameCount = $this->taskRepository->getMaxTaskNumber();
@@ -177,6 +196,11 @@ class SummaryFacade
         return $data;
     }
 
+    /**
+     * Příprava dat pro graf s celkovým přehledem hodin ve kterých studenti odevzávají
+     *
+     * @return array
+     */
     public function getGraphDataForOverview() : array
     {
         $data = [];

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Rodičovská třída pro kontrolery
+ */
+
 
 namespace App\Controller;
 
@@ -39,27 +43,47 @@ class BaseController
 
     }
 
+    /**
+     * Render metoda, obsahující základní prvky, každá akce by měla volat tuto metodu, pokud něco vykresluje
+     *
+     * @param string $file cesta k šabloně
+     * @param array  $params další parametry pro šablony
+     * @return Response
+     */
     public function render(string $file, array $params = []) : Response
     {
-        $twig = TwigService::getInstance();
+        try
+        {
+            $twig = TwigService::getInstance();
 
-        $commonParams = [
-            'studentsCount' => $this->studentRepository->getTotalStudentsCount(),
-            'errorMsg' => $this->sessionModel->getErrorMessage(),
-            'successMsg' => $this->sessionModel->getSuccessMessage(),
-            'nonRegisteredStudents' => $this->studentRepository->getStudentsSchoolNumbersWithoutPassword(),
-            'registeredStudents' => $this->studentRepository->getStudentSchoolNumbersWithPassword(),
-            'role' => $this->sessionModel->getUserRole(),
-            'selectedStudentNumber' => $this->sessionModel->getStudentSchoolNumber(),
-        ];
+            $commonParams = [
+                'studentsCount' => $this->studentRepository->getTotalStudentsCount(),
+                'errorMsg' => $this->sessionModel->getErrorMessage(),
+                'successMsg' => $this->sessionModel->getSuccessMessage(),
+                'nonRegisteredStudents' => $this->studentRepository->getStudentsSchoolNumbersWithoutPassword(),
+                'registeredStudents' => $this->studentRepository->getStudentSchoolNumbersWithPassword(),
+                'role' => $this->sessionModel->getUserRole(),
+                'selectedStudentNumber' => $this->sessionModel->getStudentSchoolNumber(),
+            ];
 
-        $data = array_merge($params,$commonParams);
+            $data = array_merge($params,$commonParams);
 
-        $this->sessionModel->clearTmpData();
+            $this->sessionModel->clearTmpData();
 
-        return new Response(EStatusCode::SUCCESS, $twig->render($file, $data));
+            return new Response(EStatusCode::SUCCESS, $twig->render($file, $data));
+        }
+        catch (\Throwable $e)
+        {
+            return new Response(EStatusCode::INTERNAL_ERROR, $e->getMessage());
+        }
     }
 
+    /**
+     * Akce pro přihlášení studenta
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function actionLoginStudent(Request $request) : Response
     {
         $studentSchoolNumber = $request->getBody()['loginOsCisloUci'];
@@ -94,6 +118,12 @@ class BaseController
         return new Response(EStatusCode::REDIRECT, "", "/public/navod");
     }
 
+    /**
+     * Akce pro přihlášení studenta
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function actionLoginTeacher(Request $request) : Response
     {
         $password = $request->getBody()['loginHesloUci'];
@@ -124,6 +154,12 @@ class BaseController
         return new Response(EStatusCode::REDIRECT, "", "/public/navod");
     }
 
+    /**
+     * Akce pro registraci studenta
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function actionRegisterStudent(Request $request) : Response
     {
         $schoolNumber = $request->getBody()['regOsCisloUci'];
@@ -153,6 +189,12 @@ class BaseController
         return new Response(EStatusCode::REDIRECT, "", "/public/navod");
     }
 
+    /**
+     * Akce pro registraci učitele
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function actionRegisterTeacher(Request $request) : Response
     {
         $password = $request->getBody()["regHesloUci"];
@@ -180,6 +222,11 @@ class BaseController
         return new Response(EStatusCode::REDIRECT, "", "/public/navod");
     }
 
+    /**
+     * Akce pro odhlášení
+     *
+     * @return Response
+     */
     public function actionLogout() : Response
     {
         $this->sessionModel->logOutUser();
@@ -187,6 +234,12 @@ class BaseController
         return new Response(EStatusCode::REDIRECT, "", "/public/navod");
     }
 
+    /**
+     * Akce pro změnu hesla
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function actionChangePassword(Request $request) : Response
     {
         $params = $request->getBody();

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Service pro načítání souborů
+ */
 
 namespace App\service;
 
@@ -19,11 +22,22 @@ class FileService
         $this->inputFolder = $config['input_folder'];
     }
 
+    /**
+     * Získání vstupní složky
+     *
+     * @return array
+     */
     public function getInputFiles() : array
     {
         return array_diff(scandir($this->inputFolder), ['..', '.']);
     }
 
+    /**
+     * Načtení souboru
+     *
+     * @param string $filename
+     * @return array
+     */
     public function loadInputFile(string $filename) : array
     {
         $filepath = $this->inputFolder . $filename;

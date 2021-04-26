@@ -1,13 +1,14 @@
 <?php
 
+/**
+ * Inicializuje se v bootstrapu, jediný úkol je nastartovat session
+ */
 
 namespace App\System;
 
 
 class Session
 {
-
-
     /**
      * Session constructor.
      */

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Jednotlivé routování url na akce
+ */
 
 namespace App\System;
 

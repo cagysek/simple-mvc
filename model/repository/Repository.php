@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Rodičovská třída pro třídy pracující s databází. Obsahuje často používané metody, které lze volat nad každými repository
+ */
 
 namespace App\Model\Repository;
 
@@ -15,6 +18,11 @@ class Repository
     private PDO $pdo;
 
 
+    /**
+     * Zsíká všechny záznamy z tabulky
+     *
+     * @return array
+     */
     protected function findAll() : array
     {
         $statement = $this->getConnection()->prepare("SELECT * FROM " . $this->tableName);
@@ -24,6 +32,12 @@ class Repository
         return $statement->fetchAll();
     }
 
+    /**
+     * Získá všechny záznamy z tabulky, které splňují podmínky
+     *
+     * @param array $data - zadané podmínky ve tvatu [sloupec => hodnota]
+     * @return array
+     */
     protected function findBy(array $data) : array
     {
         $sql = "SELECT * FROM " . $this->tableName;
@@ -60,6 +74,11 @@ class Repository
         return $statement->fetchAll();
     }
 
+    /**
+     * Získání připojení k DB
+     *
+     * @return PDO
+     */
     protected function getConnection() : PDO
     {
         if (!isset($this->pdo))
@@ -73,6 +92,12 @@ class Repository
         return $this->pdo;
     }
 
+    /**
+     * Vloží pole do tabulky
+     *
+     * @param array $rows - data pro vložení
+     * @param array $columns - definice sloupců, do kterých se bude vkládat
+     */
     protected function insertRows(array $rows, array $columns) : void
     {
         $sql = "
@@ -100,12 +125,20 @@ class Repository
         $statement->execute($params);
     }
 
+    /**
+     * Drop tabulky
+     */
     public function dropTable() : void
     {
         $statement = $this->getConnection()->prepare("DROP TABLE IF EXISTS " . $this->tableName);
         $statement->execute();
     }
 
+    /**
+     * Kontrola existence tabulky
+     *
+     * @return bool
+     */
     public function isTableExists() : bool
     {
         try

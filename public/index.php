@@ -11,6 +11,7 @@
 
     $app = new Bootstrap();
 
+    // definice mapování url na akce
     $app->router->addRoute('/public/', Router::GET, new Route(HomeController::class, 'default'));
     $app->router->addRoute('/public/navod', Router::GET, new Route(HomeController::class, 'default'));
     $app->router->addRoute('/public/detail', Router::GET, new Route(HomeController::class, 'detail'));

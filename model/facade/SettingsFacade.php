@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Fasáda pro obsluhu požadavků spojených s nastavením aplikace
+ */
 
 namespace App\model\facade;
 
@@ -28,12 +31,22 @@ class SettingsFacade
         $this->taskRepository = new TaskRepository();
     }
 
-
+    /**
+     * Načte vstupní soubory ze složky "input"
+     *
+     * @return array
+     */
     public function getInputFiles() : array
     {
         return $this->fileService->getInputFiles();
     }
 
+    /**
+     * Obsluha pro zpracování souboru s úlohami
+     *
+     * @param string $filename
+     * @return bool
+     */
     public function loadTasks(string $filename) : bool
     {
         $data = $this->fileService->loadInputFile($filename);
@@ -59,7 +72,12 @@ class SettingsFacade
     }
 
 
-
+    /**
+     * Obsluha pro zpracování souboru se studenty
+     *
+     * @param string $filename
+     * @return bool
+     */
     public function loadStudents(string $filename) : bool
     {
         $data = $this->fileService->loadInputFile($filename);
@@ -84,6 +102,12 @@ class SettingsFacade
         return true;
     }
 
+    /**
+     * Kontrola jestli soubor se studenty obsahuje požadované hlavičky
+     *
+     * @param array $headerRow
+     * @return bool
+     */
     private function isStudentsFile(array $headerRow) : bool
     {
 
@@ -92,6 +116,12 @@ class SettingsFacade
         return count(array_diff($headersMushHave, $headerRow)) == 0;
     }
 
+    /**
+     * Kontrola jestli soubor s úlohami obsahuje požadované hlavičky
+     *
+     * @param array $headerRow
+     * @return bool
+     */
     private function isTaskFile(array $headerRow) : bool
     {
        $headersMushHave = [
@@ -102,6 +132,12 @@ class SettingsFacade
         return count(array_diff($headersMushHave, $headerRow)) == 0;
     }
 
+    /**
+     * Preprocessing dat pro uložení studentů do db
+     *
+     * @param array $originalData
+     * @return array
+     */
     private function prepareStudentData(array $originalData) : array
     {
         $data = [];
@@ -118,6 +154,13 @@ class SettingsFacade
         return $data;
     }
 
+    /**
+     * Preprocessing dat pro uložení úloh do DB
+     *
+     * @param array $originalData
+     * @return array
+     * @throws \Exception
+     */
     private function prepareTaskData(array $originalData) : array
     {
         // načtu si studenty ve tvaru školní id => id v db kvůli klíči
@@ -149,11 +192,19 @@ class SettingsFacade
         return $data;
     }
 
+    /**
+     * Aktualizace počtu úloh
+     *
+     * @param int $totalTaskCount
+     */
     public function updateTotalTaskCount(int $totalTaskCount) : void
     {
         $this->settingsRepository->updateTotalTaskCount($totalTaskCount);
     }
 
+    /**
+     * Resetování/Inicializace tabulek
+     */
     public function initDatabase() : void
     {
         $this->taskRepository->dropTable();
@@ -165,6 +216,9 @@ class SettingsFacade
         $this->taskRepository->createTable();
     }
 
+    /**
+     * Kontrola existence tabulek v DB
+     */
     public function checkDatabase() : void
     {
         if (!$this->settingsRepository->isTableExists())

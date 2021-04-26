@@ -16,6 +16,11 @@ class SettingsRepository extends Repository
     const TEACHER_PASSWORD_KEY = 'teacher_password';
     const TOTAL_TASK_COUNT = 'total_task_count';
 
+    /**
+     * Zsíká heslo učitele
+     *
+     * @return string|null
+     */
     public function getTeacherPassword() : ?string
     {
         $row = $this->findBy([self::COL_KEY => self::TEACHER_PASSWORD_KEY]);
@@ -23,6 +28,11 @@ class SettingsRepository extends Repository
         return $row[0][self::COL_VALUE];
     }
 
+    /**
+     * Updatuje heslo učitele
+     *
+     * @param string $newPassword
+     */
     public function updateTeacherPassword(string $newPassword) : void
     {
         $statement = $this->getConnection()->prepare('UPDATE settings SET `value` = ? WHERE `key` = "' . self::TEACHER_PASSWORD_KEY . '"');
@@ -30,6 +40,11 @@ class SettingsRepository extends Repository
         $statement->execute([$newPassword]);
     }
 
+    /**
+     * Updatuje celkový počet úloh
+     *
+     * @param int $totalTaskCount
+     */
     public function updateTotalTaskCount(int $totalTaskCount) : void
     {
         $statement = $this->getConnection()->prepare('UPDATE settings SET `value` = ? WHERE `key` = "' . self::TOTAL_TASK_COUNT . '"');
@@ -37,6 +52,9 @@ class SettingsRepository extends Repository
         $statement->execute([$totalTaskCount]);
     }
 
+    /**
+     * Init tabulky
+     */
     public function createTable() : void
     {
         $sql = "

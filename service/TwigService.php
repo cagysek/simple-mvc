@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Service pro inicializaci twigu
+ */
 
 namespace App\Service;
 

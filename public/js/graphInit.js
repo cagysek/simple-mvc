@@ -2,8 +2,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
     createGraph();
 });
 
+/**
+ * Inicializace grafu hodin
+ */
 function createGraph()
 {
+    // získání dat
     let graphData = document.getElementById("graph-data");
 
     if (!graphData)
@@ -13,6 +17,7 @@ function createGraph()
 
     graphData = JSON.parse(graphData.innerText);
 
+    // vytovření grafu
     var ctx = document.getElementById("graf_hodin_odevzdani");
     var myChart = new Chart(ctx, {
             type: 'bar',

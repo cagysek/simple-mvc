@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Service pro připojení do DB
+ */
+
 
 namespace App\Service;
 

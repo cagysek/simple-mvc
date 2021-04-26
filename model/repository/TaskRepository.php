@@ -16,6 +16,12 @@ class TaskRepository extends Repository
     const COL_SUBMITTED = 'submitted';
     const COL_RESULT = 'result';
 
+    /**
+     * Získání dat pro detail studenta
+     *
+     * @param int $studentId
+     * @return array
+     */
     public function getStudentTasksSummary(int $studentId) : array
     {
         $sql = "
@@ -39,6 +45,12 @@ class TaskRepository extends Repository
         return $statement->fetchAll();
     }
 
+    /**
+     * Získání celkových dat pro detail studenta
+     *
+     * @param int $studentId
+     * @return array
+     */
     public function getStudentTasksTotalSummary(int $studentId) : array
     {
         $sql = "
@@ -61,6 +73,11 @@ class TaskRepository extends Repository
     }
 
 
+    /**
+     * Získání čísla maximálního odevzdaného úkolu
+     *
+     * @return int
+     */
     public function getMaxTaskNumber() : int
     {
         $sql = "
@@ -84,6 +101,12 @@ class TaskRepository extends Repository
         return $result[self::COL_NAME];
     }
 
+    /**
+     * Zsíkání dat pro progress bar na detailu studenta
+     *
+     * @param int $studentId
+     * @return array
+     */
     public function getProgressBarData(int $studentId) : array
     {
         $sql = "
@@ -102,6 +125,12 @@ class TaskRepository extends Repository
         return $statement->fetchAll();
     }
 
+    /**
+     * Získání počtu odevzdání pro studenta na hodiny
+     *
+     * @param int $studentId
+     * @return array
+     */
     public function getStudentAttemptsTimes(int $studentId) : array
     {
         $sql = "
@@ -119,6 +148,11 @@ class TaskRepository extends Repository
         return $statement->fetchAll();
     }
 
+    /**
+     * Získání odevzdání na hodiny pro všechny studenty
+     *
+     * @return array
+     */
     public function getAttemptsTimes() : array
     {
         $sql = "
@@ -135,11 +169,21 @@ class TaskRepository extends Repository
         return $statement->fetchAll();
     }
 
+    /**
+     * Vložení úloh do db
+     *
+     * @param array $data
+     */
     public function insertTasks(array $data) : void
     {
         $this->insertRows($data, [self::COL_NAME, self::COL_STUDENT_ID, self::COL_SUBMITTED, self::COL_RESULT]);
     }
 
+    /**
+     * Vrací celkový počet úloh
+     *
+     * @return int
+     */
     public function getTotalTaskCount() : int
     {
         $tasks = $this->findAll();
@@ -147,6 +191,9 @@ class TaskRepository extends Repository
         return count($tasks);
     }
 
+    /**
+     * Init tabulky
+     */
     public function createTable() : void
     {
         $sql = "
@@ -166,6 +213,11 @@ class TaskRepository extends Repository
         $statement->execute();
     }
 
+    /**
+     * Zsíkání dat pro celkový přehled
+     *
+     * @return array
+     */
     public function getOverviewData() : array
     {
         $sql = "
@@ -194,6 +246,11 @@ class TaskRepository extends Repository
         return $statement->fetchAll();
     }
 
+    /**
+     * Zsíkání maximálního počtu pokusů pro odevzdání úlohy u úkolů
+     *
+     * @return array
+     */
     public function getOverviewMaxStudentAttemptsPerTask() : array
     {
         $sql = "
@@ -208,7 +265,11 @@ class TaskRepository extends Repository
         return $statement->fetchAll(\PDO::FETCH_KEY_PAIR);
     }
 
-
+    /**
+     * Získání dat pro celkový přehled (součty)
+     *
+     * @return array
+     */
     public function getOverviewDataTotal() : array
     {
         $sql = "

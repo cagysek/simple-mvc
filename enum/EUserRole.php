@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Enum pro role uživatelů
+ */
 
 namespace App\Enum;
 

@@ -37,6 +37,9 @@ class SettingsController extends BaseController
         $this->taskRepository = new TaskRepository();
     }
 
+    /**
+     * Kontrola práv uživatele
+     */
     private function checkPrivileges()
     {
         if ($this->sessionModel->getUserRole() != EUserRole::TEACHER)
@@ -45,6 +48,10 @@ class SettingsController extends BaseController
         }
     }
 
+    /**
+     * Akce pro zobrazení stránky s nastavením
+     * @return Response
+     */
     public function actionDefault() : Response
     {
 
@@ -58,6 +65,11 @@ class SettingsController extends BaseController
         return parent::render("template/settings/default.twig", $data);
     }
 
+    /**
+     * Obsluha resetu databáze
+     *
+     * @return Response
+     */
     public function actionResetDatabase() : Response
     {
         $this->settingsFacade->initDatabase();
@@ -66,6 +78,12 @@ class SettingsController extends BaseController
         return new Response(EStatusCode::REDIRECT, "", "/public/navod");
     }
 
+    /**
+     * Obsluha resetu hesla studenta
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function actionResetStudentPassword(Request $request) : Response
     {
         $body = $request->getBody();
@@ -79,6 +97,12 @@ class SettingsController extends BaseController
         return new Response(EStatusCode::REDIRECT, "", "/public/nastaveni");
     }
 
+    /**
+     * Obsluha načtení úloh
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function actionUpdateTasks(Request $request) : Response
     {
         $body = $request->getBody();
@@ -100,6 +124,12 @@ class SettingsController extends BaseController
 
     }
 
+    /**
+     * Obsluha načtení souboru se studenty a nastavením počtu úloh
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function actionInitialization(Request $request) : Response
     {
         $body = $request->getBody();

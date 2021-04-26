@@ -21,6 +21,11 @@ class StudentRepository extends Repository
     const COL_PASSWORD = 'password';
 
 
+    /**
+     * Vrací celkový počet studentů
+     *
+     * @return int
+     */
     public function getTotalStudentsCount() : int
     {
         $students = $this->findAll();
@@ -28,6 +33,11 @@ class StudentRepository extends Repository
         return count($students);
     }
 
+    /**
+     * Vrací seznam školních číssel, které nemají nastavené heslo
+     *
+     * @return array
+     */
     public function getStudentsSchoolNumbersWithoutPassword() : array
     {
         $rows = $this->findBy([self::COL_PASSWORD . ' IS NULL' => ""]);
@@ -35,6 +45,11 @@ class StudentRepository extends Repository
         return $this->getSchoolNumbers($rows);
     }
 
+    /**
+     * Vrací seznam školních čísel, které mají nastavené heslo
+     *
+     * @return array
+     */
     public function getStudentSchoolNumbersWithPassword() : array
     {
         $rows =  $this->findBy([self::COL_PASSWORD . ' IS NOT NULL' => ""]);
@@ -42,6 +57,12 @@ class StudentRepository extends Repository
         return $this->getSchoolNumbers($rows);
     }
 
+    /**
+     * Zsíká z pole všechyn školní čísla
+     *
+     * @param array $rows
+     * @return array
+     */
     private function getSchoolNumbers(array $rows) : array
     {
         $schoolNumbers = [];
@@ -54,6 +75,12 @@ class StudentRepository extends Repository
         return  $schoolNumbers;
     }
 
+    /**
+     * Updatuje heslo studenta podle školního čísla
+     *
+     * @param string $schoolNumber
+     * @param string $password
+     */
     public function updateStudentPassword(string $schoolNumber, string $password) : void
     {
         $statement = $this->getConnection()->prepare('UPDATE student SET `password` = ? WHERE `school_number` = ?');
@@ -61,6 +88,12 @@ class StudentRepository extends Repository
         $statement->execute([$password, $schoolNumber]);
     }
 
+    /**
+     * Zsíká heslo studenta na základě školního čísla
+     *
+     * @param string $schoolNumber
+     * @return string|null
+     */
     public function getStudentPassword(string $schoolNumber) : ?string
     {
         $data = $this->findBy([self::COL_SCHOOL_NUMBER => $schoolNumber]);
@@ -73,6 +106,12 @@ class StudentRepository extends Repository
         return $data[0][self::COL_PASSWORD];
     }
 
+    /**
+     * Zsíká studenta na základě školního čísla
+     *
+     * @param string $schoolNumber
+     * @return array|null
+     */
     public function getStudentBySchoolNumber(string $schoolNumber) : ?array
     {
         $student = $this->findBy([self::COL_SCHOOL_NUMBER => $schoolNumber]);
@@ -85,6 +124,12 @@ class StudentRepository extends Repository
         return $student[0];
     }
 
+    /**
+     * Zsíká studenta na základě ID
+     *
+     * @param int $id
+     * @return mixed|null
+     */
     public function getStudentById(int $id)
     {
         $student = $this->findBy([self::COL_ID => $id]);
@@ -97,6 +142,12 @@ class StudentRepository extends Repository
         return $student[0];
     }
 
+    /**
+     * Získá informace pro výpis studentů
+     *
+     * @param int $taskCount - číslo aktuálně odevzaných úloh (maximální odevzdané číslo úkolu mezi všemi studenty)
+     * @return array
+     */
     public function getStudentListData(int $taskCount) : array
     {
         $sql = "
@@ -129,11 +180,21 @@ class StudentRepository extends Repository
         return $statement->fetchAll();
     }
 
+    /**
+     * Vrací seznam studentů s nastaveným heslem
+     *
+     * @return array
+     */
     public function getStudentsWithPassword() : array
     {
         return $this->findBy([self::COL_PASSWORD . ' IS NOT NULL' => ""]);
     }
 
+    /**
+     * Resetuje studentovo heslo
+     *
+     * @param string $schoolNumber
+     */
     public function resetStudentPassword(string $schoolNumber) : void
     {
         $sql = "
@@ -144,11 +205,21 @@ class StudentRepository extends Repository
         $statement->execute([$schoolNumber]);
     }
 
+    /**
+     * Vloží studenty do DB
+     *
+     * @param array $data
+     */
     public function insertStudents(array $data) : void
     {
         $this->insertRows($data, [self::COL_SCHOOL_NUMBER, self::COL_FIRSTNAME, self::COL_LASTNAME]);
     }
 
+    /**
+     * Vrací mapu školní číslo => id
+     *
+     * @return array
+     */
     public function getStudentSchoolNumberIdMap() : array
     {
         $sql = "
@@ -161,6 +232,9 @@ class StudentRepository extends Repository
         return $statement->fetchAll(\PDO::FETCH_KEY_PAIR);
     }
 
+    /**
+     * Init tabulky
+     */
     public function createTable() : void
     {
         $sql = "

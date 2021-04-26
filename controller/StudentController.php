@@ -7,7 +7,6 @@ namespace App\Controller;
 use App\enum\EMenuTab;
 use App\Enum\EStatusCode;
 use App\Enum\EUserRole;
-use App\Model\Facade\SummaryFacade;
 use App\Model\Repository\StudentRepository;
 use App\Model\Repository\TaskRepository;
 use App\System\Request;
@@ -30,6 +29,11 @@ class StudentController extends BaseController
 
     }
 
+    /**
+     * Akce pro zobrazení sseznamu studentů
+     *
+     * @return Response
+     */
     public function actionList() : Response
     {
         // aktuální maximální počet odevzdaných úloh
@@ -48,6 +52,12 @@ class StudentController extends BaseController
     }
 
 
+    /**
+     * Akce pro zvolení studenta a zobrazení jeho detailu
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function actionSelectStudent(Request $request) : Response
     {
         $body = $request->getBody();

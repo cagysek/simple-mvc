@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Třída představující response
+ * Obsahuje status code a body na základě kterých jsou uživatelovi zobrazena data
+ */
 
 namespace App\System;
 

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Třída představující request, obsahuje všechny potřebné metody, pokud je potřeba je možné v akci k requestu přistupovat
+ */
 
 namespace App\System;
 
