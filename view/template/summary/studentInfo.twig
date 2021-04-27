@@ -32,7 +32,8 @@
                             </abbr>
                         </div>
                         <!-- Zbytek -->
-                        {% set rest = taskCount - progressBarData["unsuccessful"] - progressBarData["successful"] %}
+
+                        {% set rest = progressBarData['total'] - progressBarData["unsuccessful"] - progressBarData["successful"] %}
                         <div class="progress-bar bg-secondary font-weight-bold" style="width:{{ (rest / taskCount) * 100 }}%    ">
                             <abbr id="oscislo_prgbar_zbytek" title="Bez pokusu o odevzdání">
                                 Vůbec: {{ rest }}

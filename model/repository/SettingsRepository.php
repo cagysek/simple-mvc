@@ -17,13 +17,25 @@ class SettingsRepository extends Repository
     const TOTAL_TASK_COUNT = 'total_task_count';
 
     /**
-     * Zsíká heslo učitele
+     * Získá heslo učitele
      *
      * @return string|null
      */
     public function getTeacherPassword() : ?string
     {
         $row = $this->findBy([self::COL_KEY => self::TEACHER_PASSWORD_KEY]);
+
+        return $row[0][self::COL_VALUE];
+    }
+
+    /**
+     * Získá celkový počet úloh učitele
+     *
+     * @return int|null
+     */
+    public function getTaskTotalCount() : ?int
+    {
+        $row = $this->findBy([self::COL_KEY => self::TOTAL_TASK_COUNT]);
 
         return $row[0][self::COL_VALUE];
     }

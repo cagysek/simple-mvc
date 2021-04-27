@@ -101,6 +101,8 @@ class SummaryFacade
             }
         }
 
+        $data['total'] = $this->settingsRepository->getTaskTotalCount();
+
         return $data;
 
     }
