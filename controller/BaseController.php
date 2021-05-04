@@ -29,6 +29,8 @@ class BaseController
 
     private SettingsFacade $settingsFacade;
 
+    protected array $environmentParameters;
+
     /**
      * BaseController constructor.
      */
@@ -40,6 +42,8 @@ class BaseController
         $this->settingsFacade = new SettingsFacade();
 
         $this->settingsFacade->checkDatabase();
+
+        $this->environmentParameters = include(__DIR__ . '/../config/env.php');
 
     }
 
@@ -64,6 +68,7 @@ class BaseController
                 'registeredStudents' => $this->studentRepository->getStudentSchoolNumbersWithPassword(),
                 'role' => $this->sessionModel->getUserRole(),
                 'selectedStudentNumber' => $this->sessionModel->getStudentSchoolNumber(),
+                'baseUri' => $this->environmentParameters['path_to_root'],
             ];
 
             $data = array_merge($params,$commonParams);
@@ -91,14 +96,14 @@ class BaseController
 
         if (empty($password))
         {
-            return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+            return new Response(EStatusCode::REDIRECT, "", "/navod");
         }
 
         if ($studentSchoolNumber == "--- Nevybráno ---")
         {
             $this->sessionModel->setErrorMessage("Nebylo zvoleno žádné osobní číslo.");
 
-            return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+            return new Response(EStatusCode::REDIRECT, "", "/navod");
 
         }
 
@@ -115,7 +120,7 @@ class BaseController
             $this->sessionModel->setErrorMessage("Přihlášení se nezdařilo. Zadané heslo není správné.");
         }
 
-        return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+        return new Response(EStatusCode::REDIRECT, "", "/navod");
     }
 
     /**
@@ -130,7 +135,7 @@ class BaseController
 
         if (empty($password))
         {
-            return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+            return new Response(EStatusCode::REDIRECT, "", "/navod");
         }
 
         $teacherPassword = $this->settingsRepository->getTeacherPassword();
@@ -151,7 +156,7 @@ class BaseController
             $this->sessionModel->setErrorMessage("Přihlášení se nezdařilo. Zadané heslo není správné.");
         }
 
-        return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+        return new Response(EStatusCode::REDIRECT, "", "/navod");
     }
 
     /**
@@ -169,14 +174,14 @@ class BaseController
         {
             $this->sessionModel->setErrorMessage("Nebylo zvoleno žádné osobní číslo.");
 
-            return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+            return new Response(EStatusCode::REDIRECT, "", "/navod");
         }
 
         if (empty($password))
         {
             $this->sessionModel->setErrorMessage("Nebylo zvoleno žádné heslo.");
 
-            return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+            return new Response(EStatusCode::REDIRECT, "", "/navod");
         }
 
         $newPasswordHash = password_hash($password, PASSWORD_BCRYPT);
@@ -186,7 +191,7 @@ class BaseController
         $this->sessionModel->loginUser(EUserRole::STUDENT);
         $this->sessionModel->setStudentSchoolNumber($schoolNumber);
 
-        return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+        return new Response(EStatusCode::REDIRECT, "", "/navod");
     }
 
     /**
@@ -201,7 +206,7 @@ class BaseController
 
         if (empty($password))
         {
-            return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+            return new Response(EStatusCode::REDIRECT, "", "/navod");
         }
 
         $teacherPassword = $this->settingsRepository->getTeacherPassword();
@@ -219,7 +224,7 @@ class BaseController
             $this->sessionModel->setErrorMessage("Registrace se nezdařila. Byla již provedena dříve.");
         }
 
-        return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+        return new Response(EStatusCode::REDIRECT, "", "/navod");
     }
 
     /**
@@ -231,7 +236,7 @@ class BaseController
     {
         $this->sessionModel->logOutUser();
 
-        return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+        return new Response(EStatusCode::REDIRECT, "", "/navod");
     }
 
     /**

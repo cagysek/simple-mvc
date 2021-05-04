@@ -22,7 +22,7 @@ class DatabaseService
     {
         if (!isset(self::$instance))
         {
-            $config = include('./../config/database.php');
+            $config = include(__DIR__ .  '/../config/database.php');
 
             try
             {

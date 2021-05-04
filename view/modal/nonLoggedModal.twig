@@ -26,7 +26,7 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div id="nep_modal_registrace_uci" class="container tab-pane fade"><br>
-                                <form action="/public/register-teacher" method="post">
+                                <form action="{{ baseUri }}/register-teacher" method="post">
                                     <div class="form-group">
                                         <input id="nep_modal_registrace_uci_heslo" type="password" class="form-control" placeholder="Úplně první zadání hesla" name="regHesloUci" title="Učitel při registraci zadá jakékoliv své budoucí heslo." required="">
                                         <div class="invalid-feedback">Prosím, zadejte svoje nové heslo.</div>
@@ -39,7 +39,7 @@
                                 </form>
                             </div>
                             <div id="nep_modal_registrace_stu" class="container tab-pane active"><br>
-                                <form action="/public/register-student" method="post">
+                                <form action="{{ baseUri }}/register-student" method="post">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><abbr title="Nevidíte-li zde svoje osobní číslo, tak se pravděpodobně již pod ním přihlásil někdo jiný.">Osobní číslo</abbr></span>
@@ -99,7 +99,7 @@
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div id="nep_modal_login_uci" class="container tab-pane fade"><br>
-                                <form action="/public/login-teacher" class="" method="post" validate="">
+                                <form action="{{ baseUri }}/login-teacher" class="" method="post" validate="">
                                     <div class="form-group">
                                         <input id="nep_modal_login_uci_heslo" type="password" class="form-control" placeholder="Heslo" name="loginHesloUci" required="">
                                         <div class="invalid-feedback">Prosím, zadejte svoje heslo.</div>
@@ -112,7 +112,7 @@
                                 </form>
                             </div>
                             <div id="nep_modal_login_stu" class="container tab-pane active"><br>
-                                <form action="/public/login-student" class="" method="post" validate="">
+                                <form action="{{ baseUri }}/login-student" class="" method="post" validate="">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">Osobní číslo</span>

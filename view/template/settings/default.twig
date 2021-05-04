@@ -37,7 +37,7 @@
                         {% if studentsCount %}
                             <div class="alert alert-warning">Seznam všech studentů již byl načten. Pokud jej chcete změnit, resetujte nejdříve DB.</div>
                         {% endif %}
-                        <form action="/public/initialization" method="post" validate="">
+                        <form action="{{ baseUri }}/initialization" method="post" validate="">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Počet všech úloh</span>
@@ -68,7 +68,7 @@
                         {% if studentsCount == 0 %}
                             <div class="alert alert-warning">Dosud nebyl načten seznam všech studentů. Proveďte to v Inicializaci.</div>
                         {% endif %}
-                        <form action="/public/update-tasks" method="post" validate="">
+                        <form action="{{ baseUri }}/update-tasks" method="post" validate="">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Jméno souboru odevzdaných úloh</span>
@@ -91,7 +91,7 @@
                         {% if studentsCount == 0 %}
                             <div class="alert alert-warning">Dosud nebyl načten seznam všech studentů.</div>
                         {% endif %}
-                        <form action="/public/reset-student-password" class="" method="post" validate="">
+                        <form action="{{ baseUri }}/reset-student-password" class="" method="post" validate="">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Osobní číslo</span>
@@ -110,7 +110,7 @@
                     </div>
                     <div id="nastaveni_reset_DB" class="container tab-pane fade"><br>
                         <h5 id="nastaveni_reset_DB_nadpis">Vymaže celou databázi. Po této akci bude aplikace ve stavu jako před prvním spuštěním.</h5>
-                        <form action="/public/reset-database" method="post">
+                        <form action="{{ basseUri }}/reset-database" method="post">
                             <div class="form-group">
                                 <a id="nastaveni_reset_DB_submit" class="btn btn-danger text-light" href="#" data-toggle="modal" data-target="#nastaveni_reset_DB_modal" title="Rozmysli si to!">
                                     Resetovat databázi

@@ -21,7 +21,7 @@ class TwigService
     {
         if (!isset(self::$instance))
         {
-            $twigConfig = include("../config/twig.php");
+            $twigConfig = include(__DIR__ . "/../config/twig.php");
 
             $loader = new FilesystemLoader($twigConfig['root_folder']);
 

@@ -66,11 +66,11 @@ class StudentController extends BaseController
 
         if ($this->sessionModel->getUserRole() != EUserRole::TEACHER)
         {
-            return new Response(EStatusCode::REDIRECT, NULL, '/public/navod');
+            return new Response(EStatusCode::REDIRECT, NULL, '/navod');
         }
 
         $this->sessionModel->setStudentSchoolNumber($schoolNumber);
 
-        return new Response(EStatusCode::REDIRECT, NULL, '/public/osobniCislo');
+        return new Response(EStatusCode::REDIRECT, NULL, '/osobniCislo');
     }
 }

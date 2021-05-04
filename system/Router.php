@@ -22,6 +22,8 @@ class Router
      */
     private Bootstrap $bootstrap;
 
+    private array $environmentParams;
+
     /**
      * Router constructor.
      *
@@ -32,6 +34,8 @@ class Router
     {
         $this->request = $request;
         $this->bootstrap = $bootstrap;
+
+        $this->environmentParams = include(__DIR__ . './../config/env.php');
     }
 
 
@@ -44,6 +48,8 @@ class Router
      */
     public function addRoute(string $url, string $type, Route $route) : void
     {
+        $url = $this->environmentParams['path_to_root'] . $url;
+
         $this->routeMap[$type][$url] = $route;
     }
 

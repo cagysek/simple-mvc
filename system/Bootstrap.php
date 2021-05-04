@@ -18,6 +18,8 @@ class Bootstrap
 
     public Session $session;
 
+    private array $environmentParams;
+
     /**
      * App constructor.
      */
@@ -26,6 +28,8 @@ class Bootstrap
         $this->request = new Request();
         $this->router = new Router($this->request, $this);
         $this->session = new Session();
+        $this->environmentParams = include(__DIR__ . './../config/env.php');
+
     }
 
     /**
@@ -45,7 +49,10 @@ class Bootstrap
             }
             elseif ($response->getStatusCode() == EStatusCode::REDIRECT)
             {
-                header("Location: " . $response->getRedirect());
+                $location = $response->getRedirect();
+                $baseUri = $this->environmentParams['path_to_root'];
+
+                header("Location: " . $baseUri . $location);
             }
             else if ($response->getStatusCode() == EStatusCode::INTERNAL_ERROR)
             {

@@ -44,7 +44,7 @@ class SettingsController extends BaseController
     {
         if ($this->sessionModel->getUserRole() != EUserRole::TEACHER)
         {
-            header("Location: /public/");
+            header("Location: /");
         }
     }
 
@@ -75,7 +75,7 @@ class SettingsController extends BaseController
         $this->settingsFacade->initDatabase();
         $this->sessionModel->logOutUser();
 
-        return new Response(EStatusCode::REDIRECT, "", "/public/navod");
+        return new Response(EStatusCode::REDIRECT, "", "/navod");
     }
 
     /**
@@ -94,7 +94,7 @@ class SettingsController extends BaseController
 
         $this->sessionModel->setSuccessMessage("Reset hesla studenta proběhl.");
 
-        return new Response(EStatusCode::REDIRECT, "", "/public/nastaveni");
+        return new Response(EStatusCode::REDIRECT, "", "/nastaveni");
     }
 
     /**
@@ -120,7 +120,7 @@ class SettingsController extends BaseController
             $this->sessionModel->setErrorMessage("Soubor neobsahuje data s úlohami.");
         }
 
-        return new Response(EStatusCode::REDIRECT, "", "/public/nastaveni");
+        return new Response(EStatusCode::REDIRECT, "", "/nastaveni");
 
     }
 
@@ -151,7 +151,7 @@ class SettingsController extends BaseController
             $this->sessionModel->setErrorMessage("Soubor neobsahuje data se studenty.");
         }
 
-        return new Response(EStatusCode::REDIRECT, "", "/public/nastaveni");
+        return new Response(EStatusCode::REDIRECT, "", "/nastaveni");
     }
 
 }

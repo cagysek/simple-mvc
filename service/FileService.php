@@ -17,7 +17,7 @@ class FileService
      */
     public function __construct()
     {
-        $config = include('./../config/env.php');
+        $config = include(__DIR__ . '/../config/env.php');
 
         $this->inputFolder = $config['input_folder'];
     }
