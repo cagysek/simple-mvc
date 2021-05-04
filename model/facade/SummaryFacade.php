@@ -61,13 +61,13 @@ class SummaryFacade
         $taskTotalRows = $this->taskRepository->getStudentTasksTotalSummary($studentId);
 
         $data["total"] = [
-            "total" => $taskTotalRows[0]["total"],
-            "endDate" => $taskTotalRows[0]["end_date"],
-            "startDate" => $taskTotalRows[0]["start_date"],
-            "unsuccessfulAttempt" => $taskTotalRows[0]["unsuccessful_attempt"],
-            "successfulAttempt" => $taskTotalRows[0]["successful_attempt"],
-            "successRate" => $taskTotalRows[0]["success_rate"],
-            "maxAttempt" => $maxVal,
+            "total" => $taskTotalRows[0]["total"] ?? 0,
+            "endDate" => $taskTotalRows[0]["end_date"] ?? NULL,
+            "startDate" => $taskTotalRows[0]["start_date"] ?? NULL,
+            "unsuccessfulAttempt" => $taskTotalRows[0]["unsuccessful_attempt"] ?? 0,
+            "successfulAttempt" => $taskTotalRows[0]["successful_attempt"] ?? 0,
+            "successRate" => $taskTotalRows[0]["success_rate"] ?? 0,
+            "maxAttempt" => $maxVal ?? 0,
         ];
 
 
@@ -190,7 +190,7 @@ class SummaryFacade
             'isOkAttempts' => $overviewTableTotalData['is_ok_attempts'],
             'successRate' => round($overviewTableTotalData['succ_rate'] * 100),
             'maxStudentAttempts' => $maxStudentAttemptsTotal,
-            'averageAttemptsPerStudent' => round($averageAttemptsPerStudentTotal / $totalTaskNameCount),
+            'averageAttemptsPerStudent' => $totalTaskNameCount > 0 ? round($averageAttemptsPerStudentTotal / $totalTaskNameCount) : 0,
         ];
 
 

@@ -28,24 +28,14 @@ class SettingsController extends BaseController
     {
         parent::__construct();
 
-        $this->checkPrivileges();
+        // povolení pouze orle učitele pro všechny akce
+        $this->checkPrivileges([EUserRole::TEACHER]);
 
         $this->studentRepository = new StudentRepository();
 
         $this->settingsFacade = new SettingsFacade();
 
         $this->taskRepository = new TaskRepository();
-    }
-
-    /**
-     * Kontrola práv uživatele
-     */
-    private function checkPrivileges()
-    {
-        if ($this->sessionModel->getUserRole() != EUserRole::TEACHER)
-        {
-            header("Location: /");
-        }
     }
 
     /**

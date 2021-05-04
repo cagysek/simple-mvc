@@ -48,6 +48,23 @@ class BaseController
     }
 
     /**
+     * Kontrola práv uživatele
+     *
+     * @param array $rolesWithAccess pole povolených rolí
+     */
+    protected function checkPrivileges(array $rolesWithAccess)
+    {
+        if (!in_array($this->sessionModel->getUserRole(), $rolesWithAccess))
+        {
+            $this->sessionModel->setErrorMessage("Do této sekce nemáte přístup");
+
+            header("Location: " . $this->environmentParameters['path_to_root'] . '/navod');
+
+            die;
+        }
+    }
+
+    /**
      * Render metoda, obsahující základní prvky, každá akce by měla volat tuto metodu, pokud něco vykresluje
      *
      * @param string $file cesta k šabloně

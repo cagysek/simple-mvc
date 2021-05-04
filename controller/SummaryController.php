@@ -43,8 +43,8 @@ class SummaryController extends BaseController
         $data = [
             "tab" => EMenuTab::OVERALL,
             "taskCount" => $this->taskRepository->getMaxTaskNumber(),
-            "taskData" => $tableData['task'],
-            "totalData" => $tableData['total'],
+            "taskData" => $tableData['task'] ?? [],
+            "totalData" => $tableData['total'] ?? [],
             "totalStudentCount" => $totalStudentCount,
             "graphData" => json_encode($this->summaryFacade->getGraphDataForOverview(), JSON_FORCE_OBJECT),
         ];
@@ -70,8 +70,8 @@ class SummaryController extends BaseController
         $data = [
             "tab" => EMenuTab::STUDENT,
             "studentInfo" => $student,
-            "studentData" => $studentTableData['student'],
-            "studentTotalData" => $studentTableData['total'],
+            "studentData" => $studentTableData['student'] ?? [],
+            "studentTotalData" => $studentTableData['total'] ?? [],
             "taskCount" => $this->taskRepository->getMaxTaskNumber(),
             "progressBarData" => $this->summaryFacade->getProgressBarData($studentId),
             "graphData" => json_encode($this->summaryFacade->getGraphDataForStudent($studentId), JSON_FORCE_OBJECT),

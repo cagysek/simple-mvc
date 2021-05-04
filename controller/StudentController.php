@@ -60,14 +60,11 @@ class StudentController extends BaseController
      */
     public function actionSelectStudent(Request $request) : Response
     {
+        $this->checkPrivileges([EUserRole::TEACHER]);
+
         $body = $request->getBody();
 
         $schoolNumber = $body['OBSLUHA_studenti_zobrazStudenta'];
-
-        if ($this->sessionModel->getUserRole() != EUserRole::TEACHER)
-        {
-            return new Response(EStatusCode::REDIRECT, NULL, '/navod');
-        }
 
         $this->sessionModel->setStudentSchoolNumber($schoolNumber);
 
