@@ -49,6 +49,7 @@ class SettingsFacade
      */
     public function loadTasks(string $filename) : bool
     {
+        // načtení souboru
         $data = $this->fileService->loadInputFile($filename);
 
         if (!$data)
@@ -56,6 +57,7 @@ class SettingsFacade
             return false;
         }
 
+        // validace vstupního souboru
         if (!$this->isTaskFile($data[0]))
         {
             return false;
@@ -66,6 +68,10 @@ class SettingsFacade
 
         $preparedData = $this->prepareTaskData($data);
 
+        // odstranění starých záznamů
+        $this->taskRepository->removeAllTasks();
+
+        // vložení nových
         $this->taskRepository->insertTasks($preparedData);
 
         return true;

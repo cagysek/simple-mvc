@@ -179,6 +179,12 @@ class TaskRepository extends Repository
         $this->insertRows($data, [self::COL_NAME, self::COL_STUDENT_ID, self::COL_SUBMITTED, self::COL_RESULT]);
     }
 
+    public function removeAllTasks() : void
+    {
+        $statement = $this->getConnection()->prepare("DELETE FROM task;");
+        $statement->execute();
+    }
+
     /**
      * Vrací celkový počet úloh
      *
