@@ -8,13 +8,7 @@
 
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 
-    <script>
-        $(document).ready( function () {
-            $('#studenti_tab').DataTable( {
-                "pageLength": 100
-            });
-        } );
-    </script>
+    <script type="text/javascript" src="{{ baseUri }}/public/js/datatable.js"></script>
 
 {% endblock %}
 
@@ -50,7 +44,7 @@
                                         # OK
                                     </abbr>
                                 </th>
-                                <th colspan="{{ taskCount }}">OKS</th></tr>
+                                <th colspan="{{ taskCount }}" id="task-count">OKS</th></tr>
                             <tr>
                                 {% for i in 1..taskCount %}
                                     <th class="align-middle">{{ "%02d"|format(i) }}</th>
@@ -73,9 +67,12 @@
                                                 <input id="studenti_tab_td_odkaz_{{ row['schoolNumber'] }}" type="submit" class="btn btn-link" name="OBSLUHA_studenti_zobrazStudenta" value="{{ row['schoolNumber'] }}">
                                             </form>
                                         </td>
-                                        <td id="studenti_tab_td_suma_{{ row['schoolNumber'] }}" class="align-middle text-success">{{ row['successAttempts'] }}</td>
+                                        <td id="studenti_tab_td_suma_{{ row['schoolNumber'] }}" class="align-middle text-success">
+                                            <span>
+                                                {{ row['successAttempts'] }}
+                                            </span>
+                                        </td>
                                         {% for i in 1..taskCount %}
-
                                             <td class="align-middle">
                                                 {# nastavenení pozadí #}
                                                 {% set css = row['isOk' ~ i] is not null ? ("background-color: #8fd19e") : row['totalAttempts' ~ i] is not null ? "background-color: #ed969e" : "" %}
