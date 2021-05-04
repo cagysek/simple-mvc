@@ -47,6 +47,7 @@ class SummaryController extends BaseController
             "totalData" => $tableData['total'] ?? [],
             "totalStudentCount" => $totalStudentCount,
             "graphData" => json_encode($this->summaryFacade->getGraphDataForOverview(), JSON_FORCE_OBJECT),
+            "validToDate" => $this->taskRepository->getMaxSubmittedDate(),
         ];
 
         return parent::render("template/summary/default.twig", $data);

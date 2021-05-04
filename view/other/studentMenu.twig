@@ -12,7 +12,7 @@
       <a id="stu_menu_zmena_heslo" class="dropdown-item" href="#" data-toggle="modal" data-target="#stu_modal_zmena">
           Změna hesla
       </a>
-      <form action="/logout" method="post">
+      <form action="{{ baseUri }}/logout" method="post">
         <button id="stu_menu_logout" type="submit" class="dropdown-item btn-link" name="OBSLUHA_logout_logoutStudent">
             Logout
             <i class="fas fa-sign-out-alt"></i>
