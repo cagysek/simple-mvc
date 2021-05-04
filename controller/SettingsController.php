@@ -107,7 +107,7 @@ class SettingsController extends BaseController
         }
         else
         {
-            $this->sessionModel->setErrorMessage("Soubor neobsahuje data s úlohami.");
+            $this->sessionModel->setErrorMessage("Soubor se nepodařilo načíst, zkontrolujete, že obsahuje validní data.");
         }
 
         return new Response(EStatusCode::REDIRECT, "", "/nastaveni");

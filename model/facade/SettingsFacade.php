@@ -68,6 +68,11 @@ class SettingsFacade
 
         $preparedData = $this->prepareTaskData($data);
 
+        if (empty($preparedData))
+        {
+            return false;
+        }
+
         // odstranění starých záznamů
         $this->taskRepository->removeAllTasks();
 
