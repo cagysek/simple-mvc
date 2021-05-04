@@ -91,16 +91,25 @@
             <h2 id="navod_podrobne_instal_nadpis">Postup instalace</h2>
             <ol>
                 <li>Rozbalte instalační soubor do adresáře, odkud se spouští <span class="text-monospace text-danger">localhost</span></li>
+                <li>Pokud nebude složka rozbalena v kořenovém adresáři <span class="text-monospace text-danger">localhost</span>
+                    je nutné specifikovat cestu od kořenového adresáře k souboru <span class="text-monospace text-danger">index.php</span>
+                    v konfiguračním souboru <span class="text-monospace text-danger">config/env.php</span>. Např. projekt bude umístěn v adresáři
+                    <span class="text-monospace text-danger">localhost</span> ve složce <span class="text-monospace text-danger">simple-mvc</span>, v
+                    konfiguračním souboru bude tedy nutné nastavit konstantu <span class="text-monospace text-danger">path_to_root</span> na hodnotu
+                    <span class="text-monospace text-danger">/simple-mvc</span>
+                </li>
                 <li>V lokální SŘBD si založte novou databázi, ideálně se jménem <span class="text-monospace text-danger">upa</span>; databáze bude prázdná</li>
-                <li>V souboru <span class="text-monospace text-danger">konstanty-zmenit.inc.php</span> zkontrolujte a případně přenastavte hodnoty
-                    konstant <span class="text-monospace text-danger">DB__SERVER</span>,
-                    <span class="text-monospace text-danger">DB__NAME</span>,
-                    <span class="text-monospace text-danger">DB__USER</span> a
-                    <span class="text-monospace text-danger">DB__PASS</span></li>
-                <li>Do adresního řádku webového prohlížeče zadejte <span class="text-monospace text-danger">http://localhost/upa/index.php</span></li>
+                <li>V souboru <span class="text-monospace text-danger">config/database.php</span> zkontrolujte a případně přenastavte hodnoty
+                    konstant <span class="text-monospace text-danger">host</span>,
+                    <span class="text-monospace text-danger">database</span>,
+                    <span class="text-monospace text-danger">username</span> a
+                    <span class="text-monospace text-danger">password</span>
+
+                </li>
+                <li>Do adresního řádku webového prohlížeče zadejte <span class="text-monospace text-danger">http://localhost/</span></li>
                 <li>Po úplně prvním spuštění se v SŘBD <span class="font-italic">automaticky</span> vytvoří tři tabulky:
-                    <span class="text-monospace text-danger">nastaveni</span> (předvyplněná), <span class="text-monospace text-danger">studenti</span>
-                    (prázdná) a <span class="text-monospace text-danger">ulohy</span> (prázdná)
+                    <span class="text-monospace text-danger">settings</span> (předvyplněná), <span class="text-monospace text-danger">students</span>
+                    (prázdná) a <span class="text-monospace text-danger">tasks</span> (prázdná)
                 </li>
                 <li>Zvolte submenu <i class="role_navod fas fa-user-secret"></i> <span class="font-weight-bold">Nepřihlášený / Registrace</span></li>
                 <li>Zaregistrujte se v roli <i class="role_navod fas fa-user-tie"></i> <span class="font-weight-bold">Učitel</span> – protože je učitel pouze jeden, stačí jen zadat jakékoliv počáteční heslo</li>
@@ -121,11 +130,26 @@
             <ul>
                 <li><span class="font-weight-bold">Verze 1.0</span></li>
                 <ul>
+                    <li>Autor: Pavel Herout</li>
                     <li>MVC postavený na třídách</li>
                     <li>Bootstrap 4</li>
                     <li>JavaScript pro řazení v tabulce a pro zobrazení grafů</li>
                     <li>nepoužity Twig šablony</li>
                     <li>neoptimalizované dotazy do DB</li>
+                </ul>
+
+                <li><span class="font-weight-bold">Verze 2.0</span></li>
+                <ul>
+                    <li>Autor: Jan Čarnogurský</li>
+                    <li>pro PHP >= 7.4 !!</li>
+                    <li>Vytvořen jednoduchý framework pro obsluhu požadavků</li>
+                    <li>Standart PSR-4</li>
+                    <li>Typování proměnných a funkcí</li>
+                    <li>Bootstrap 4</li>
+                    <li>JS knihovna DataTable pro řazení a vyhledávání v tabulkách</li>
+                    <li>ChartJs pro vykreslování grafů</li>
+                    <li>Frontend řešen přes Twig</li>
+                    <li>Optimalizované dotazy do DB</li>
                 </ul>
             </ul>
         </div>
