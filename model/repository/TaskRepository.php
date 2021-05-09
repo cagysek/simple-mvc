@@ -297,7 +297,7 @@ class TaskRepository extends Repository
         return $statement->fetch();
     }
 
-    public function getMaxSubmittedDate() : string
+    public function getMaxSubmittedDate() : ?string
     {
         $sql = "
             SELECT MAX(submitted) FROM task;
