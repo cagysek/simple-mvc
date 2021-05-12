@@ -68,6 +68,9 @@ class SummaryController extends BaseController
 
         $studentTableData = $this->summaryFacade->getStudentTableData($studentId);
 
+
+        $graphData = $this->summaryFacade->getGraphDataForStudent($studentId);
+
         $data = [
             "tab" => EMenuTab::STUDENT,
             "studentInfo" => $student,
@@ -75,9 +78,8 @@ class SummaryController extends BaseController
             "studentTotalData" => $studentTableData['total'] ?? [],
             "taskCount" => $this->taskRepository->getMaxTaskNumber(),
             "progressBarData" => $this->summaryFacade->getProgressBarData($studentId),
-            "graphData" => json_encode($this->summaryFacade->getGraphDataForStudent($studentId), JSON_FORCE_OBJECT),
+            "graphData" => !empty($graphData) ? json_encode($graphData, JSON_FORCE_OBJECT) : null,
         ];
-
 
         return parent::render("template/summary/studentInfo.twig", $data);
     }

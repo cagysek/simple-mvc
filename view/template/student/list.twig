@@ -25,11 +25,13 @@
                         <span id="celkove_zadna_data" class="text-danger text-center font-weight-bold">Dosud nejsou k dispozici žádná data</span><p></p>
                     </div>
                 {% else %}
-                    <div class="col-12 table-responsive">
+                    <div class="col-12 table-responsive no-padding">
                         <table id="studenti_tab" class="table table-sm table-bordered table-striped table-hover">
                             <thead class="thead-dark text-center">
                             <tr id="studenti_tab_tr_0">
-                                <th rowspan="2" class="align-middle">#</th>
+                                <th rowspan="2" class="align-middle">
+                                    #
+                                </th>
                                 <th rowspan="2" class="align-middle">
                                     Příjmení
                                 </th>
@@ -41,15 +43,24 @@
                                 </th>
                                 <th rowspan="2" class="align-middle">
                                     <abbr title="Celkem úspěšně odevzdaných úloh">
-                                        # OK
+                                        #&nbsp;OK
                                     </abbr>
                                 </th>
-                                <th colspan="{{ taskCount }}" id="task-count">OKS</th></tr>
-                            <tr>
-                                {% for i in 1..taskCount %}
-                                    <th class="align-middle">{{ "%02d"|format(i) }}</th>
-                                {% endfor %}
+                                {% if taskCount %}
+                                    <th colspan="{{ taskCount }}" id="task-count">
+                                        OKS
+                                    </th>
+                                {% endif %}
                             </tr>
+
+                            {% if taskCount %}
+                                <tr>
+                                    {% for i in 1..taskCount %}
+                                        <th class="align-middle">{{ "%02d"|format(i) }}</th>
+                                    {% endfor %}
+                                </tr>
+                            {% endif %}
+
                             </thead>
                             <tbody class="text-center">
                                 {% for row in data %}
@@ -67,21 +78,23 @@
                                                 <input id="studenti_tab_td_odkaz_{{ row['schoolNumber'] }}" type="submit" class="btn btn-link" name="OBSLUHA_studenti_zobrazStudenta" value="{{ row['schoolNumber'] }}">
                                             </form>
                                         </td>
-                                        <td id="studenti_tab_td_suma_{{ row['schoolNumber'] }}" class="align-middle text-success">
+                                        <td id="studenti_tab_td_suma_{{ row['schoolNumber'] }}" class="align-middle {% if row['successAttempts'] %}text-success{% endif %}">
                                             <span>
-                                                {{ row['successAttempts'] }}
+                                                {{ row['successAttempts'] ?? "&ndash;"}}
                                             </span>
                                         </td>
-                                        {% for i in 1..taskCount %}
-                                            <td class="align-middle">
-                                                {# nastavenení pozadí #}
-                                                {% set css = row['isOk' ~ i] is not null ? ("background-color: #8fd19e") : row['totalAttempts' ~ i] is not null ? "background-color: #ed969e" : "" %}
+                                        {% if taskCount %}
+                                            {% for i in 1..taskCount %}
+                                                <td class="align-middle">
+                                                    {# nastavenení pozadí #}
+                                                    {% set css = row['isOk' ~ i] is not null ? ("background-color: #8fd19e") : row['totalAttempts' ~ i] is not null ? "background-color: #ed969e" : "" %}
 
-                                                <span style="{{ css }}" class="text-dark px-2 py-0">
-                                                    {{ row['totalAttempts' ~ i] ?? "-" }}
-                                                </span>
-                                            </td>
-                                        {% endfor %}
+                                                    <span style="{{ css }}" class="text-dark px-2 py-0">
+                                                        {{ row['totalAttempts' ~ i] ?? "&ndash;" }}
+                                                    </span>
+                                                </td>
+                                            {% endfor %}
+                                        {% endif %}
                                     </tr>
                                 {% endfor %}
                             </tbody>

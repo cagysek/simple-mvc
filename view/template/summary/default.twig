@@ -51,7 +51,9 @@
                                     Počet úspěšných studentů
                                 </abbr>
                             </td>
-                            <td style="vertical-align:middle;">—</td>
+                            <td style="vertical-align:middle;">
+                                &mdash;
+                            </td>
                             {% for i in 1..taskCount %}
                                 <td class="align-middle">
                                     {{ taskData[i]['studentsSuccessCount'] }}
@@ -65,11 +67,15 @@
                                 </abbr>
                             </td>
                             <td id="celkove_tab_tr_3_suma" class="align-middle">
-                                ∑&nbsp;{{ totalData['studentsSurrenderCount'] }}
+                                {% if totalData['studentsSurrenderCount'] %}
+                                    ∑&nbsp;{{ totalData['studentsSurrenderCount'] }}
+                                {% else %}
+                                    ∑&nbsp;0
+                                {% endif %}
                             </td>
                             {% for i in 1..taskCount %}
                                 <td class="align-middle">
-                                    {{ taskData[i]['studentsSurrenderCount'] }}
+                                    {{ taskData[i]['studentsSurrenderCount'] > 0 ? taskData[i]['studentsSurrenderCount'] : "&ndash;" }}
                                 </td>
                             {% endfor %}
                         </tr>
@@ -80,11 +86,15 @@
                                 </abbr>
                             </td>
                             <td id="celkove_tab_tr_4_suma" class="align-middle">
-                                ∑&nbsp;{{ totalData['total'] }}
+                                {% if totalData['total'] %}
+                                    ∑&nbsp;{{ totalData['total'] }}
+                                {% else %}
+                                    ∑&nbsp;0
+                                {% endif %}
                             </td>
                             {% for i in 1..taskCount %}
                                 <td class="align-middle">
-                                    {{ taskData[i]['total'] }}
+                                    {{ taskData[i]['total'] > 0 ? taskData[i]['total'] : "&ndash;" }}
                                 </td>
                             {% endfor %}
                         </tr>
@@ -95,11 +105,15 @@
                                 </abbr>
                             </td>
                             <td id="celkove_tab_tr_5_suma" class="align-middle">
-                                ∑&nbsp;{{ totalData['isNotOkAttempts'] }}
+                                {% if totalData['isNotOkAttempts'] %}
+                                    ∑&nbsp;{{ totalData['isNotOkAttempts'] }}
+                                {% else %}
+                                    ∑&nbsp;0
+                                {% endif %}
                             </td>
                             {% for i in 1..taskCount %}
                                 <td class="align-middle">
-                                    {{ taskData[i]['isNotOkAttempts'] }}
+                                    {{ taskData[i]['isNotOkAttempts'] > 0 ? taskData[i]['isNotOkAttempts'] : "&ndash;" }}
                                 </td>
                             {% endfor %}
                         </tr>
@@ -110,11 +124,15 @@
                                 </abbr>
                             </td>
                             <td id="celkove_tab_tr_6_suma" class="align-middle">
-                                ∑&nbsp;{{ totalData['isOkAttempts'] }}
+                                {% if totalData['isOkAttempts'] %}
+                                    ∑&nbsp;{{ totalData['isOkAttempts'] }}
+                                {% else %}
+                                    ∑&nbsp;0
+                                {% endif %}
                             </td>
                             {% for i in 1..taskCount %}
                                 <td class="align-middle">
-                                    {{ taskData[i]['isOkAttempts'] }}
+                                    {{ taskData[i]['isOkAttempts'] > 0 ? taskData[i]['isOkAttempts'] : "&ndash;" }}
                                 </td>
                             {% endfor %}
                         </tr>
@@ -125,11 +143,19 @@
                                 </abbr>
                             </td>
                             <td id="celkove_tab_tr_7_suma" class="align-middle">
-                                ø&nbsp;{{ totalData['successRate'] }}&nbsp;%
+                                {% if totalData['successRate'] %}
+                                    ø&nbsp;{{ totalData['successRate'] }}&nbsp;%
+                                {% else %}
+                                    ø&nbsp;0&nbsp;%
+                                {% endif %}
                             </td>
                             {% for i in 1..taskCount %}
                                 <td class="align-middle">
-                                    {{ taskData[i]['successRate'] }}&nbsp;%
+                                    {% if taskData[i]['successRate'] > 0 %}
+                                        {{ taskData[i]['successRate'] }}&nbsp;%
+                                    {% else %}
+                                        &ndash;
+                                    {% endif %}
                                 </td>
                             {% endfor %}
                         </tr>
@@ -144,7 +170,7 @@
                             </td>
                             {% for i in 1..taskCount %}
                                 <td class="align-middle">
-                                    {{ taskData[i]['averageAttemptsPerStudent'] }}
+                                    {{ taskData[i]['averageAttemptsPerStudent'] > 0 ? taskData[i]['averageAttemptsPerStudent'] : "&ndash;" }}
                                 </td>
                             {% endfor %}
                         </tr>
@@ -159,7 +185,7 @@
                             </td>
                             {% for i in 1..taskCount %}
                                 <td class="align-middle">
-                                    {{ taskData[i]['averageAttemptsPerStudent'] }}
+                                    {{ taskData[i]['maxStudentAttempts'] > 0 ? taskData[i]['maxStudentAttempts'] : "&ndash;" }}
                                 </td>
                             {% endfor %}
                         </tr>

@@ -53,8 +53,14 @@ class FileService
 
         while ($row = fgetcsv($handler))
         {
-            $data[] = explode(';', str_replace("\"", '', $row[0]));
+            $inputLine =  $row[0];
+
+            // převod na utf 8
+            $inputLineUtf8 = iconv('WINDOWS-1250', 'UTF-8', $inputLine);
+
+            $data[] = explode(';', str_replace("\"", '', $inputLineUtf8));
         }
+
 
         fclose($handler);
 

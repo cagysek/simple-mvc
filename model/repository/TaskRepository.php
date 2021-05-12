@@ -205,7 +205,7 @@ class TaskRepository extends Repository
         $sql = "
             CREATE TABLE `task` (
               `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-              `name` varchar(11) DEFAULT NULL,
+              `name` int(10) DEFAULT NULL,
               `student_id` int(10) unsigned DEFAULT NULL,
               `submitted` datetime DEFAULT NULL,
               `result` tinyint(1) DEFAULT NULL,

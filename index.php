@@ -16,6 +16,7 @@ use \App\system\Route;
 
     // definice mapování url na akce
     $app->router->addRoute('/', Router::GET, new Route(HomeController::class, 'default'));
+    $app->router->addRoute('/index.php', Router::GET, new Route(HomeController::class, 'default'));
     $app->router->addRoute('/navod', Router::GET, new Route(HomeController::class, 'default'));
     $app->router->addRoute('/detail', Router::GET, new Route(HomeController::class, 'detail'));
     $app->router->addRoute('/celkove', Router::GET, new Route(SummaryController::class, 'default'));

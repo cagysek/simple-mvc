@@ -131,9 +131,16 @@ class SettingsController extends BaseController
 
         $this->settingsFacade->updateTotalTaskCount($taskCount);
 
-
         if ($result)
         {
+            // nastaví defaultního uživatele do menu
+            $defaultStudent = $this->studentRepository->getStudentById(1);
+
+            if ($defaultStudent)
+            {
+                $this->sessionModel->setStudentSchoolNumber($defaultStudent[StudentRepository::COL_SCHOOL_NUMBER]);
+            }
+
             $this->sessionModel->setSuccessMessage("Soubor byl načten. <br> Počet záznamů, které byly uloženy do DB: " . $this->studentRepository->getTotalStudentsCount());
         }
         else

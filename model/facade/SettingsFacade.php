@@ -157,8 +157,8 @@ class SettingsFacade
         {
             $data[] = [
                 StudentRepository::COL_SCHOOL_NUMBER => $row[0],
-                StudentRepository::COL_FIRSTNAME => $row[1],
-                StudentRepository::COL_LASTNAME => $row[2],
+                StudentRepository::COL_FIRSTNAME => mb_convert_case(mb_strtolower($row[1]), MB_CASE_TITLE, 'UTF-8'), // pro jistotu převedeme na první velký zbytek malý
+                StudentRepository::COL_LASTNAME => mb_convert_case(mb_strtolower($row[2]), MB_CASE_TITLE, 'UTF-8'), // první písmeno velké, defaultně uppercase
             ];
         }
 

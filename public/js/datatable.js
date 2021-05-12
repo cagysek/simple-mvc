@@ -67,10 +67,24 @@ $(document).ready( function () {
         cols.push(i);
     }
 
-    $('#studenti_tab').DataTable( {
+    var t = $('#studenti_tab').DataTable( {
         "pageLength": 100,
         columnDefs: [
-            { type: 'formatted-num', targets: cols }
-        ]
+            { type: 'formatted-num', targets: cols },
+            {
+                searchable: false,
+                orderable: false,
+                targets: 0
+            }
+        ],
+        "order": [[ 1, 'asc' ]] // výchozí řazení
     });
+
+    // reindexace nově seřezených řádek
+    t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    } ).draw();
+
 } );
