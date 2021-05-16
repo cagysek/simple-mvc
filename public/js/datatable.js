@@ -21,18 +21,23 @@ String.prototype.extract = function(prefix, suffix) {
     return s;
 };
 
-jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+$.extend( $.fn.dataTableExt.oSort, {
     "formatted-num-pre": function ( a ) {
-
         // získám číslo mezi spany
         a = a.extract(">", "<");
 
         // odstraním mezery
         a = a.trim();
 
-        a = (a === "-" || a === "") ? 0 : a;
+        a = parseFloat(a);
 
-        return parseFloat( a );
+        // pokud není číslo, dám 0
+        if (isNaN(a))
+        {
+            a = 0;
+        }
+
+        return a;
     },
 
     "formatted-num-asc": function ( a, b ) {
@@ -44,6 +49,37 @@ jQuery.extend( jQuery.fn.dataTableExt.oSort, {
     }
 } );
 
+// https://datatables.net/plug-ins/sorting/czech-string
+$.extend( $.fn.dataTableExt.oSort, {
+    "czech-pre": function ( a ) {
+        var special_letters = {
+            "A": "Aa", "a": "aa", "Á": "Ab", "á": "ab",
+            "C": "Ca", "c": "ca", "Č": "Cb", "č": "cb",
+            "D": "Da", "d": "da", "Ď": "db", "ď": "db",
+            "E": "Ea", "e": "ea", "É": "eb", "é": "eb", "Ě": "Ec", "ě": "ec",
+            "I": "Ia", "i": "ia", "Í": "Ib", "í": "ib",
+            "N": "Na", "n": "na", "Ň": "Nb", "ň": "nb",
+            "O": "Oa", "o": "oa", "Ó": "Ob", "ó": "ob",
+            "R": "Ra", "r": "ra", "Ř": "Rb", "ř": "rb",
+            "S": "Sa", "s": "sa", "Š": "Sb", "š": "sb",
+            "T": "Ta", "t": "ta", "Ť": "Tb", "ť": "tb",
+            "U": "Ua", "u": "ua", "Ú": "Ub", "ú": "ub", "Ů": "Uc", "ů": "uc",
+            "Y": "Ya", "y": "ya", "Ý": "Yb", "ý": "yb",
+            "Z": "Za", "z": "za", "Ž": "Zb", "ž": "zb"
+        };
+        for (var val in special_letters)
+            a = a.split(val).join(special_letters[val]).toLowerCase();
+        return a;
+    },
+
+    "czech-asc": function ( a, b ) {
+        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+    },
+
+    "czech-desc": function ( a, b ) {
+        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+    }
+} );
 
 $(document).ready( function () {
     var cols = [];
@@ -71,6 +107,7 @@ $(document).ready( function () {
         "pageLength": 100,
         columnDefs: [
             { type: 'formatted-num', targets: cols },
+            { type: 'czech', targets: [1,2] },
             {
                 searchable: false,
                 orderable: false,
