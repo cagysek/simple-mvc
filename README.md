@@ -31,4 +31,4 @@ Aplikace používá reálná data z validátoru studentských úloh.
 
 
 # Spuštění testů
-Testy jsou řešeny přes PHPUnit. Spuštění testu provedete zadáním skriptu `composer run-tests` v kořenovém adresáři projektu.
+Testy jsou řešeny přes PHPUnit. Spuštění testu provedete zadáním příkazu `composer run-tests` v kořenovém adresáři projektu.

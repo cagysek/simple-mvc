@@ -228,6 +228,33 @@ class SummaryFacade
     }
 
 
+    /**
+     * Settery pro testovací účely
+     */
+
+    /**
+     * @param SettingsRepository $settingsRepository
+     */
+    public function setSettingsRepository(SettingsRepository $settingsRepository) : void
+    {
+        $this->settingsRepository = $settingsRepository;
+    }
+
+    /**
+     * @param TaskRepository $taskRepository
+     */
+    public function setTaskRepository(TaskRepository $taskRepository) : void
+    {
+        $this->taskRepository = $taskRepository;
+    }
+
+    /**
+     * @param StudentRepository $studentRepository
+     */
+    public function setStudentRepository(StudentRepository $studentRepository) : void
+    {
+        $this->studentRepository = $studentRepository;
+    }
 
 
 }

@@ -1,3 +1,4 @@
 vendor
 studenti.csv
 ulohy.csv
+.phpunit.result.cache
