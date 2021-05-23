@@ -28,3 +28,7 @@ Aplikace používá reálná data z validátoru studentských úloh.
 * V menu  Nastavení v záložce Počáteční inicializace načtěte soubor `studenti-debug.csv`
 * V menu  Nastavení v záložce  Aktualizace úloh načtěte soubor `ulohy-debug.csv`
 * Od této chvíle můžete aplikaci používat
+
+
+# Spuštění testů
+Testy jsou řešeny přes PHPUnit. Spuštění testu provedete zadáním skriptu `composer run-tests` v kořenovém adresáři projektu.
