@@ -85,6 +85,7 @@ class SettingsFacadeTest extends TestCase
 
         $inputFiles = $this->settingsFacade->getInputFiles();
 
+        $this->assertIsArray($inputFiles);
         $this->assertEquals(2, sizeof($inputFiles));
     }
 }

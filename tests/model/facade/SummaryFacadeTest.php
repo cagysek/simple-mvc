@@ -30,8 +30,6 @@ class SummaryFacadeTest extends TestCase
         $this->summaryFacade->setTaskRepository($this->taskRepository);
         $this->summaryFacade->setStudentRepository($this->studentRepository);
         $this->summaryFacade->setSettingsRepository($this->settingsRepository);
-
-
     }
 
     public function testGetOverviewData()
@@ -62,6 +60,7 @@ class SummaryFacadeTest extends TestCase
 
         $data = $this->summaryFacade->getOverviewData();
 
+        $this->assertIsArray($data);
         $this->assertEquals(2, sizeof($data));
         $this->assertEquals(3, sizeof($data['task']));
         $this->assertEquals($data['total']['studentsTryCount'], sizeof($data['task']));
@@ -99,6 +98,7 @@ class SummaryFacadeTest extends TestCase
 
         $data = $this->summaryFacade->getStudentTableData(0);
 
+        $this->assertIsArray($data);
         $this->assertEquals(2, sizeof($data));
         $this->assertEquals(2, sizeof($data['student']));
 
@@ -156,6 +156,7 @@ class SummaryFacadeTest extends TestCase
             23 => 0
         ];
 
+        $this->assertIsArray($data);
         $this->assertEquals($expected, $data);
     }
 
@@ -175,6 +176,7 @@ class SummaryFacadeTest extends TestCase
 
         $data = $this->summaryFacade->getProgressBarData(0);
 
+        $this->assertIsArray($data);
         $this->assertEquals(3, sizeof($data));
         $this->assertEquals(1, $data['unsuccessful']);
         $this->assertEquals(2, $data['successful']);
@@ -221,6 +223,7 @@ class SummaryFacadeTest extends TestCase
             23 => 23,
         ];
 
+        $this->assertIsArray($data);
         $this->assertEquals($expected, $data);
     }
 }
