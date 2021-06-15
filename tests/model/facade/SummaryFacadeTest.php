@@ -160,6 +160,17 @@ class SummaryFacadeTest extends TestCase
         $this->assertEquals($expected, $data);
     }
 
+    public function testGetGraphDataForStudentNoAttemptsTimes()
+    {
+        $this->taskRepository
+            ->method('getStudentAttemptsTimes')
+            ->willReturn([]);
+
+        $data = $this->summaryFacade->getGraphDataForStudent(0);
+
+        $this->assertEquals([], $data);
+    }
+
     public function testGetProgressBarData()
     {
         $this->taskRepository

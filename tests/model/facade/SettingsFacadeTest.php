@@ -63,6 +63,39 @@ class SettingsFacadeTest extends TestCase
         $this->assertEquals(true, $this->settingsFacade->loadTasks(''));
     }
 
+    public function testLoadTasksNoData()
+    {
+        $this->fileService
+            ->method('loadInputFile')
+            ->willReturn([]);
+
+        $this->assertEquals(false, $this->settingsFacade->loadTasks(''));
+    }
+
+    public function testLoadTasksOnlyHeaders()
+    {
+        $this->fileService
+            ->method('loadInputFile')
+            ->willReturn([
+                ['Predmet','Nazev tematu','Osobni cislo','Jmeno','Nazev souboru','Pokus','Datum odevzdani','Autom. validace-Vysledek','Validator']
+            ]);
+
+        $this->assertEquals(false, $this->settingsFacade->loadTasks(''));
+    }
+
+    public function testLoadTasksNoHeaders()
+    {
+        $this->fileService
+            ->method('loadInputFile')
+            ->willReturn([
+                ['KIV/OKS','OKS-01 - oks-01.jar','A10B0001P','RŮŽOVÁ Anita','oks-01.jar','1','02.03.2021 16:35','Špatné výsledky','http://validator.zcu.cz'],
+                ['KIV/OKS','OKS-02 - oks-02.jar','A10B1111P','SIVÝ Charlie','oks-02.jar','1','09.03.2021 18:38','Jiná chyba','http://validator.zcu.cz'],
+                ['KIV/OKS','OKS-01 - oks-01.jar','A10B4321P','ŠEDIVÝ Emil','oks-01.jar','1','03.03.2021 22:42','Jiná chyba','http://validator.zcu.cz']
+            ]);
+
+        $this->assertEquals(false, $this->settingsFacade->loadTasks(''));
+    }
+
     public function testLoadStudents()
     {
         $this->fileService
@@ -75,6 +108,28 @@ class SettingsFacadeTest extends TestCase
             ]);
         
         $this->assertEquals(true, $this->settingsFacade->loadStudents(''));
+    }
+
+    public function testLoadStudentsNoData()
+    {
+        $this->fileService
+            ->method('loadInputFile')
+            ->willReturn([]);
+
+        $this->assertEquals(false, $this->settingsFacade->loadStudents(''));
+    }
+
+    public function testLoadStudentsNoHeaders()
+    {
+        $this->fileService
+            ->method('loadInputFile')
+            ->willReturn([
+                ['A10B0001P', 'Anita', 'RŮŽOVÁ'],
+                ['A10B8765P', 'Cyril', 'ŽLUTÝ'],
+                ['A10B1111P', 'Charlie', 'SIVÝ']
+            ]);
+
+        $this->assertEquals(false, $this->settingsFacade->loadStudents(''));
     }
 
     public function testGetInputFiles()
